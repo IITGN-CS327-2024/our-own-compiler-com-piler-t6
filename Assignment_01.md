@@ -10,7 +10,7 @@
 - The end point of a line can be determined using semicolon notation. If the last character on a line is a semicolon, then that line ends.
 
 ```plaintext
-myInteger int = 10;
+myInteger int = 20;
 ```
 
 ## Comments
@@ -29,6 +29,7 @@ myInteger int = 10;
   ```
 
 ## Pendown Function
+
 To print data to the console, use the `pendown` function as follows:
 
 ```plaintext
@@ -42,7 +43,6 @@ Print a simple greeting message:
 ```plaintext
 pendown("Hello, World!");
 ```
-
 
 ## Variables
 
