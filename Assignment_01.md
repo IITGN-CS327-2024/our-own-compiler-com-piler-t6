@@ -8,7 +8,7 @@
 - The endpoint of a statement can be determined using semicolon notation. If the last character on a line is a semicolon, that line/statement ends.
   
   ```
-  myInteger <int> = 20;
+  myInteger (integer) = 20;
   ```
 
 ## Comments
@@ -44,7 +44,7 @@ pendown("Hello, World!");
 ```
 plaintext
 # Example: Capturing a user's name and printing a greeting message
-userName <textwave> = penup("Please enter your name: ");
+userName (textwave) = penup("Please enter your name: ");
 pendown("Hello, " + userName + "!");
 ```
 
@@ -69,7 +69,7 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myInteger <integer> = 10;
+  myInteger (integer) = 10;
   ```
 - ## Character
 
@@ -77,7 +77,7 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myCharacter <character> = 'A';
+  myCharacter (character) = 'A';
   ```
 - ## Floatpoint
 
@@ -85,7 +85,7 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myFloat <floatpoint> = 3.14;
+  myFloat (floatpoint) = 3.14;
   ```
 - ## Doublepoint
 
@@ -93,7 +93,7 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myDouble <doublepoint> = 3.1415926535;
+  myDouble (doublepoint) = 3.1415926535;
   ```
 - ## Textwave (Strings)
 
@@ -101,21 +101,21 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myString <textwave> = "Hello, World!";
+  myString (textwave) = "Hello, World!";
   ```
-- ## Flag (T/F)
+- ## Flag (True/False)
 
-  A flag (boolean) variable declaration example, using 'T' for true:
+  A flag (boolean) variable declaration example, using 'True' for true:
 
 
   ```plaintext
-  myFlag <flag> = T;
+  myFlag (flag) = True;
   ```
 
-  And using 'F' for false:
+  And using 'False' for false:
 
   ```plaintext
-  anotherFlag <flag> = F;
+  anotherFlag (flag) = False;
   ```
 - ## Null
 
@@ -123,7 +123,7 @@ pendown("Hello, " + userName + "!");
 
 
   ```plaintext
-  myNullValue <null> = null;
+  myNullValue (null) = null;
   ```
 
 # Arithmetic Operations
@@ -139,8 +139,8 @@ Unary operations involve a single operand. Here are the basic unary arithmetic o
 ### Unary Operations Examples
 
 ```plaintext
-a <integer> = 10;
-c <int> = -a; # c = -10 (Negation)
+a (integer) = 10;
+c (int) = -a; # c = -10 (Negation)
 c++; # c = -9 (Increment)
 c--; # c = -10 (Decrement)
 ```
@@ -161,26 +161,26 @@ Binary operations involve two operands. Here are the basic binary arithmetic ope
 ```plaintext
 # Assuming variable declarations are similar to the syntax: variable_name <data_type> = literal;
 
- a <int> = 10;
- b <int> = 5;
+ a (integer) = 10;
+ b (integer) = 5;
 
 # Addition
- sum <int> = a + b; # sum = 15
+ sum (integer) = a + b; # sum = 15
 
 # Subtraction
- difference <int> = a - b; # difference = 5
+ difference (integer) = a - b; # difference = 5
 
 # Multiplication
- product <int> = a * b; # product = 50
+ product (integer) = a * b; # product = 50
 
 # Division
- quotient <float> = a / b; # quotient = 2.0
+ quotient (floatpoint) = a / b; # quotient = 2.0
 
 # Modulus
- remainder <int> = a % b; # remainder = 0
+ remainder (integer) = a % b; # remainder = 0
 
 # Exponentiation
- power <double> = a ^ 2; # power = 100.0
+ power (doublepoint) = a ^ 2; # power = 100.0
 
 ```
 
@@ -202,8 +202,8 @@ Comparison operators are used to compare two values, returning a boolean result 
 ### Comparison Operators Examples
 
 ```plaintext
- x <int> = 10;
- y <int> = 20;
+ x (integer) = 10;
+ y (integer) = 20;
 
 # Equal
 Given (x == y) {
@@ -253,7 +253,7 @@ Assignment operators are used to assign or update the value of a variable.
 ### Assignment Operators Examples
 
 ```plaintext
- x <int> = 10;
+ x (integer) = 10;
 
 # Assignment
 x = 5; # x is now 5
@@ -311,17 +311,18 @@ Given (not x == 10) {
 
 ## **Immutability**: Variables are immutable.
 
-- immute variable_name <data_type> = literal
+- immute variable_name (data_type) = literal
 
 ## Array
 
-- **Syntax**: `variable_name <data_type, size> = ||
+- **Syntax**: `variable_name (data_type, size) = ||
 - - **Predefined Functions**:
   - `.dim()`: Returns the dimension of the array.
   - `.exchange(index, element)`: Exchanges the element at the specified index.
   - `.getidx(value)`: Returns the index of the given value.
   - `.sort(asc/dsc)`: Sorts the array in ascending or descending order.
   - `.tail()`: return the tail of the array.
+  - `.head()`: return the first element of the array.
 
 ## List
 
@@ -357,7 +358,58 @@ Given (not x == 10) {
 
 ## Loops
 
-- **Syntax**: `iterate (data_type variable_name; through list1;){}`
+The iterate construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the for loop in many other languages but is tailored to the syntax and semantics of this language.
+
+### Looping Through a List
+
+To iterate over each element in a list/array, use the following syntax:
+
+```plaintext
+iterate (variable_name (int) = initialization; through list1;) {
+    # Loop body where `variable_name` can be used
+}
+```
+
+This loop initializes variable_name and iterates through each element in list1, allowing the loop body to execute with each element.
+
+### Looping Through a Range
+
+To loop through a numerical range, including the ability to specify a step (increment or decrement), use the syntax:
+
+```plaintext
+iterate (variable_name (int) = initialization; through range(start...end, step);) {
+    # Loop body where `variable_name` is updated per the range and step
+}
+```
+
+- start...end specifies the range of values to iterate through.
+- step determines the increment/decrement for each iteration. A negative step value implies a decrement.
+
+### Examples
+
+Looping through a list of integers:
+
+```plaintext
+iterate (i (int) = 0; through myList;) {
+    pendown(i);
+}
+```
+
+Looping through a range with a positive step:
+
+```plaintext
+iterate (i (int) = 0; through range(0...10, 1);) {
+    pendown(i);
+}
+```
+
+Looping through a range with a negative step:
+
+```plaintext
+iterate (i (int) = 10; through range(10...0, -1);) {
+    pendown(i);
+}
+```
 
 ## Function
 
