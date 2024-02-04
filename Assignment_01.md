@@ -366,58 +366,90 @@ Given (! x == 10) {
 
 ## Loops
 
-The iterate construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the for loop in many other languages but is tailored to the syntax and semantics of this language.
+The `iterate` construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the `for` loop in many other languages but is tailored to the syntax and semantics of this language.
 
 ### Looping Through a List
 
 To iterate over each element in a list/array, use the following syntax:
 
-```plaintext
+\```plaintext
 iterate (variable_name (int) = initialization; through list1;) {
     # Loop body where `variable_name` can be used
 }
-```
+\```
 
-This loop initializes variable_name and iterates through each element in list1, allowing the loop body to execute with each element.
+This loop initializes `variable_name` and iterates through each element in `list1`, allowing the loop body to execute with each element.
 
 ### Looping Through a Range
 
 To loop through a numerical range, including the ability to specify a step (increment or decrement), use the syntax:
 
-```plaintext
+\```plaintext
 iterate (variable_name (int) = initialization; through range(start...end, step);) {
     # Loop body where `variable_name` is updated per the range and step
 }
-```
+\```
 
-- start...end specifies the range of values to iterate through.
-- step determines the increment/decrement for each iteration. A negative step value implies a decrement.
+- `start...end` specifies the range of values to iterate through.
+- `step` determines the increment/decrement for each iteration. A negative step value implies a decrement.
 
 ### Examples
 
 Looping through a list of integers:
 
-```plaintext
+\```plaintext
 iterate (i (int) = 0; through myList;) {
     pendown(i);
 }
-```
+\```
 
 Looping through a range with a positive step:
 
-```plaintext
+\```plaintext
 iterate (i (int) = 0; through range(0...10, 1);) {
     pendown(i);
 }
-```
+\```
 
 Looping through a range with a negative step:
 
-```plaintext
+\```plaintext
 iterate (i (int) = 10; through range(10...0, -1);) {
     pendown(i);
 }
-```
+\```
+
+### Using `interrupt` and `resume` in Loops
+
+In addition to the basic looping constructs, `interrupt` and `resume` provide control flow mechanisms similar to `break` and `continue` in other languages.
+
+- `interrupt` exits the loop immediately, skipping any remaining iterations.
+- `resume` skips the current iteration and proceeds with the next one.
+
+#### Example: Using `interrupt`
+
+\```plaintext
+iterate (i (int) = 0; through range(0...5, 1);) {
+    if (i == 3) {
+        interrupt; # Exits the loop when i equals 3
+    }
+    pendown(i);
+}
+\```
+
+#### Example: Using `resume`
+
+\```plaintext
+iterate (i (int) = 0; through range(0...5, 1);) {
+    if (i == 3) {
+        resume; # Skips the current loop iteration when i equals 3
+    }
+    pendown(i);
+}
+\```
+
+These constructs enhance the flexibility and control over the loop execution, allowing for more complex and dynamic flow control within loops.
+
 
 ## Function
 
