@@ -1,60 +1,85 @@
-# keywords = {
-#     'pendown', 'penup', 'integer', 'character', 'floatpoint', 'doublepoint', 'textwave', 'flag',
-#     'True', 'False', 'given', 'elsegiven', 'otherwise', 'iterate', 'through', 'fn', 'exitwith', 
-#     'strive', 'capture', 'immute', 'interrupt', 'resume', 'dim', 'sort','while', 'add', 'remove', 
-#     'exchange', 'getidx', 'asc', 'dsc','tail', 'head',
-# }
+# Token Classes
 
-# binary_operators = {
-#     '+', '-', '*', '/', '%', '^', '==', '!=', '>', '<', '>=', '<=', '=', '+=', '-=', 
-#     '*=', '/=', '%=', '&&', '$$', '!'
-# }
+"""
+keywords = {
+    'pendown', 'penup', 'integer', 'character', 'floatpoint', 'doublepoint', 'textwave', 'flag',
+    'true', 'false', 'given', 'elsegiven', 'otherwise', 'iterate', 'through', 'fn', 'exitwith', 
+    'strive', 'capture', 'immute', 'interrupt', 'resume', 'dim', 'sort','while', 'add', 'remove', 
+    'exchange', 'getidx', 'asc', 'dsc','tail', 'head', 'range', 'throwexception'
+}
 
-# unary_operators = {
-#     '++', '--'
-# }
+binary_operators = {
+    '+', '-', '*', '/', '%', '^', '==', '!=', '>', '<', '>=', '<=', '=', '+=', '-=', 
+    '*=', '/=', '%=', '&&', '$$', '!'
+}
 
-# whitespace = {
-#     ' ', '\n', '\t'
-# }
+unary_operators = {
+    '++', '--'
+}
 
-# parenthesis = {
-#     '(', ')', '[', ']', '{', '}'
-# }
+whitespace = {
+    ' ', '\n', '\t'
+}
 
-# delimiters = {
-#     ';', ',', '.',':'
-# }
-import re
+parenthesis = {
+    '(', ')', '[', ']', '{', '}'
+}
+
+delimiters = {
+    ';', ',' , '.' , ':'
+}
+
+range_delimiters = {
+   ...
+}
+
+float_literal = { 
+1.5, 0.4, 
+}
+
+integer_literal = {
+e.g. 1,2,3
+}
+
+string_literal = {
+e.g. "hello"
+}
+
+char_literal = {
+e.g. 'a'
+}
+
+boolean_literal = {
+True, False
+}
+
+identifier = {
+e.g. var1, var2, var3
+}
+
+"""
+
+import re, os
 
 class Lexer:
     def __init__(self):
         self.token_patterns = {
-            # Comments
             'single_line_comment': r'#.*',
             'multi_line_comment': r'"""[\s\S]*?"""',
-            # Keywords
-            'keywords': r'\b(pendown|penup|integer|character|floatpoint|doublepoint|textwave|flag|True|False|given|elsegiven|otherwise|iterate|through|fn|exitwith|strive|capture|immute|interrupt|resume|dim|sort)\b',
-            # Operators
+            'string_literal': r'"(?:\\.|[^"\\])*"',
+            'char_literal': r"'(?:\\.|[^'\\])'",
+            'range_delimiter': r'\.\.\.',
+            'keywords': r'\b(pendown|penup|integer|character|floatpoint|doublepoint|textwave|flag|true|false|given|elsegiven|otherwise|iterate|through|fn|exitwith|strive|capture|immute|interrupt|resume|dim|sort|while|add|remove|exchange|getidx|asc|dsc|tail|head|range|throwexception)\b',
+            'float_literal': r'-?\b\d+\.\d*\b|-?\b\d+\.\b',
+            'integer_literal': r'-?\b\d+\b',
             'unary_operators': r'(\+\+|--)',
-            'binary_operators': r'(\+|\-|\*|\/|%|\^|==|!=|>|<|>=|<=|=|\+=|\-=|\*=|\/=|%=|&&|\$\$|!)',
-            # Brackets and Parentheses
+            'binary_operators': r'(\+|\-|\*|\/|%|\^|==|!=|>|<|>=|<=|&&|\$\$|!)',
+            'assignment_operators': r'(=|\+=|\-=|\*=|\/=|%=)',
             'parenthesis': r'([\(\)\[\]\{\}])',
-            # Floating point numbers  
-            'float_literal': r'\b-?\d+\.\d*\b|\b-?\.\d+\b',
-            # Integer literals
-            'integer_literal': r'\b\d+\b',
-            # Delimiters (excluding the dot as it's handled in float_literal)
             'delimiters': r'(;|,|:|\.)',
-            # String literals
-            'string_literal': r'"[^"]*"',
-            # Boolean literals
-            'boolean_literal': r'\b(True|False)\b',
-            # Identifiers
             'identifier': r'\b[a-zA-Z_][a-zA-Z_0-9]*\b',
-            
+            'whitespace': r'(\s+)',
         }
-        # Combine patterns, prioritizing float_literal and integer_literal correctly
         self.combined_pattern = '|'.join(f'(?P<{k}>{v})' for k, v in self.token_patterns.items())
 
     def tokenize(self, code):
@@ -62,7 +87,7 @@ class Lexer:
         for match in re.finditer(self.combined_pattern, code):
             token_type = match.lastgroup
             token_value = match.group()
-            if token_type not in ['single_line_comment', 'multi_line_comment']:
+            if token_type not in ['single_line_comment', 'multi_line_comment', 'whitespace']:
                 tokens.append((token_type, token_value))
         return tokens
 
@@ -77,21 +102,29 @@ class LexerOutputFormatter:
                 formatted_output.append(f'<{token_type}, "{token_value}">')
         return formatted_output
 
-def main(input_file, output_file):
-    with open(input_file, 'r') as file:
-        code = file.read()
+def main(input_folder, output_folder):
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    input_files = [f for f in os.listdir(input_folder) if f.endswith('.cmm')]
 
-    lexer = Lexer()
-    tokens = lexer.tokenize(code)
-    
-    formatter = LexerOutputFormatter()
-    formatted_output = formatter.format(tokens)
-    
-    with open(output_file, 'w') as file:
-        for token in formatted_output:
-            file.write(token + '\n')
+    for input_file in input_files:
+        input_file_path = os.path.join(input_folder, input_file)
+        output_file_path = os.path.join(output_folder, input_file.replace('.cmm', '_output.txt'))
+
+        with open(input_file_path, 'r') as file:
+            code = file.read()
+
+        lexer = Lexer()
+        tokens = lexer.tokenize(code)
+
+        formatter = LexerOutputFormatter()
+        formatted_output = formatter.format(tokens)
+
+        with open(output_file_path, 'w') as file:
+            for token in formatted_output:
+                file.write(token + '\n')
 
 if __name__ == "__main__":
-    input_file = 'test_cases.txt'  
-    output_file = 'lexer_output.txt' 
-    main(input_file, output_file)
+    input_folder = 'lexer_testcases'
+    output_folder = 'lexer_output'
+    main(input_folder, output_folder)
