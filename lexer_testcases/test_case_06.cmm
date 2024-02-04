@@ -1,0 +1,17 @@
+strive() {
+    myValue (integer) = 10;
+    given (myValue > 5) {
+        throwexception("Value exceeds threshold");
+    }
+}
+capture() {
+    pendown("Error has occurred: Value exceeds threshold");
+}
+
+strive() {
+    mySafeValue (integer) = 4;
+    pendown("This operation is safe");
+}
+capture() {
+    pendown("An unexpected error has occurred in a safe operation");
+}
