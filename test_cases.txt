@@ -1,0 +1,50 @@
+var (integer) = {1,2.3};
+var.sort();
+++;
+# Test Case 1: Greeting with User Input
+userName (textwave) = penup("Please enter your name: ");
+pendown("Hello, " + userName + "!");
+
+# Test Case 2: Arithmetic Operations
+num1 (integer) = 10;
+num2 (integer) = 5.1;
+sum (integer) = num1 + num2;
+pendown("Sum: " + sum + ";");
+
+difference (integer) = num1 - num2;
+pendown("Difference: " + difference + ";");
+
+product (integer) = num1 * num2;
+pendown("Product: " + product + ";");
+
+quotient (floatpoint) = num1 / num2;
+pendown("Quotient: " + quotient + ";");
+
+
+# Test Case 3: Conditional Statements
+x (integer) = 20;
+
+Given (x > 15) {
+    pendown("x is greater than 15;");
+}
+ElseGiven (x == 10) {
+    pendown("x is equal to 10;");
+}
+Otherwise {
+    pendown("x is less than 15;");
+}
+
+# Test Case 4: Looping Through an Array
+myArray (integer, 5) = {10, 20, 30, 40, 50};
+iterate (i (integer) = 0; through myArray.dim();) {
+    pendown(myArray[i] + ";");
+}
+
+# Test Case 5: Function Definition and Call
+fn sum(a (integer), b (integer)) {
+    result (integer) = a + b;
+    exitwith result;
+}
+
+mainResult (integer) = sum(5, 10);
+pendown("Sum from function: " + mainResult + ";");
