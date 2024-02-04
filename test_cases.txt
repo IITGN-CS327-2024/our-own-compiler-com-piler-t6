@@ -1,6 +1,7 @@
 var (integer) = {1,2.3};
 var.sort();
 ++;
+--;
 # Test Case 1: Greeting with User Input
 userName (textwave) = penup("Please enter your name: ");
 pendown("Hello, " + userName + "!");
