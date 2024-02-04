@@ -1,5 +1,8 @@
-# Programming Language Specification
+# CMinusMinus/C--(.cmm)
 
+# Programming Language Specification
+- Our language is Case Sensitive.
+  
 ## Entry Point of Code
 
 - The program execution starts from the first line of the script and proceeds sequentially. (same as Python)
@@ -48,7 +51,7 @@ pendown("Hello, " + userName + "!");
 ```
 
 ## Variables and datatypes
-- **Syntax**: `variable_name <data_type> = literal`
+- **Syntax**: `variable_name (data_type) = literal`
 - **Primitive Data Types**:
   - integer (`integer`)
   - character (`character`)
@@ -56,6 +59,15 @@ pendown("Hello, " + userName + "!");
   - doublepoint (`double`)
   - textwave (`string`)
   - flag (`bool`)
+    
+### Rules to Declare a Variable 
+ - A variable name can consist of Capital letters A-Z, lowercase letters a-z digits 0-9, and two special characters such as _ underscore and $ dollar sign.
+ - The first character must not be a digit.
+ - Blank spaces cannot be used in variable names.
+ - Java keywords cannot be used as variable names.
+ - Variable names are case-sensitive.
+ - There is no limit on the length of a variable name but by convention, it should be between 4 to 15 chars.
+ - Variable names always should exist on the left-hand side of assignment operators.
 
 ## Examples of Variable Declarations in Our Programming Language
 
@@ -100,6 +112,12 @@ pendown("Hello, " + userName + "!");
 
   ```plaintext
   myString (textwave) = "Hello, World!";
+  pendown(myString[1:5]); #The output would be "ello"
+  pendown(myString[-1]); #The output would be "!"
+  pendown(myString[::-1]); #The output would be "!dlroW ,olleH"
+
+  myString2 (textwave) = "How are you?";
+  pendown(myString + " " + myString2); #The output would be "Hello World! How are you?"
   ```
 - ## Flag (True/False)
 
@@ -149,7 +167,7 @@ Binary operations involve two operands. Here are the basic binary arithmetic ope
 ### Binary Operations Examples
 
 ```plaintext
-# Assuming variable declarations are similar to the syntax: variable_name <data_type> = literal;
+# Assuming variable declarations are similar to the syntax: variable_name (data_type) = literal;
 
  a (integer) = 10;
  b (integer) = 5;
