@@ -21,7 +21,7 @@ whitespace = {
     ' ', '\n', '\t'
 }
 
-parenthesis = {
+parentheses = {
     '(', ')', '[', ']', '{', '}'
 }
 
@@ -49,9 +49,6 @@ char_literal = {
 e.g. 'a'
 }
 
-boolean_literal = {
-True, False
-}
 
 identifier = {
 e.g. var1, var2, var3
@@ -73,12 +70,11 @@ class Lexer:
             'float_literal': r'-?\b\d+\.\d*\b|-?\b\d+\.\b',
             'integer_literal': r'-?\b\d+\b',
             'unary_operators': r'(\+\+|--)',
-            'binary_operators': r'(\+|\-|\*|\/|%|\^|==|!=|>|<|>=|<=|&&|\$\$|!)',
-            'assignment_operators': r'(=|\+=|\-=|\*=|\/=|%=)',
-            'parenthesis': r'([\(\)\[\]\{\}])',
+            'binary_operators': r'(\+|\-|\|\/|%|\^|==|!=|>|<|>=|<=|=|\+=|\-=|\=|\/=|%=|&&|\$\$|!)',
+            'parentheses': r'([\(\)\[\]\{\}])',
             'delimiters': r'(;|,|:|\.)',
             'identifier': r'\b[a-zA-Z_][a-zA-Z_0-9]*\b',
-            'whitespace': r'(\s+)',
+            'whitespace': r'[ \n\t]+',
         }
         self.combined_pattern = '|'.join(f'(?P<{k}>{v})' for k, v in self.token_patterns.items())
 
@@ -101,6 +97,8 @@ class LexerOutputFormatter:
             else:
                 formatted_output.append(f'<{token_type}, "{token_value}">')
         return formatted_output
+    
+
 
 def main(input_folder, output_folder):
     if not os.path.exists(output_folder):
@@ -125,6 +123,6 @@ def main(input_folder, output_folder):
                 file.write(token + '\n')
 
 if __name__ == "__main__":
-    input_folder = 'lexer_testcases'
-    output_folder = 'lexer_output'
+    input_folder = 'our-own-compiler-com-piler-t6/lexer_testcases'
+    output_folder = 'our-own-compiler-com-piler-t6/lexer_output'
     main(input_folder, output_folder)

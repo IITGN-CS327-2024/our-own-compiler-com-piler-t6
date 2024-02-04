@@ -10,6 +10,6 @@ pendown("Hello, World!");
 
 # Testing character and boolean literals
 myChar (character) = 'c';
-myBool (flag) = True;
+myBool (flag) = true;
 myfloat (floatpoint) = 1.2;
 mydouble (doublepoint) = 1.2345;

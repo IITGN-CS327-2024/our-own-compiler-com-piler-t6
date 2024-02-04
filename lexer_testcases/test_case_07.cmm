@@ -1,0 +1,7 @@
+pendown penup integer character floatpoint doublepoint textwave flag true false given elsegiven otherwise iterate through fn exitwith strive capture immute interrupt resume dim sort while add remove exchange getidx asc dsc tail head range throwexception
++ - * / % ^ == != > < >= <= = += -= *= /= %= && $$ !
+++ --
+( ) [ ] { }
+; , . :
+...
+..
