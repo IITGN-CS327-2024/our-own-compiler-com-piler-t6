@@ -17,6 +17,8 @@
 <delimiters, ";">
 <unary_operators, "++">
 <delimiters, ";">
+<unary_operators, "--">
+<delimiters, ";">
 <identifier, "userName">
 <parenthesis, "(">
 <keywords, "textwave">
