@@ -463,12 +463,25 @@ These constructs enhance the flexibility and control over the loop execution, al
 
 ## Exception Handling
 
+- Strive is the keyword for try and capture is the keyword for except.
 - **Syntax**:
   ```plaintext
   strive(){
-      # Try block
+      x = 10
   }
   capture(){
-      # Catch block
+      pendown("Error has occurred: ; is missing");
   }
   ```
+
+- throwexception is used to raise error.
+
+- **Syntax**:
+  ```plaintext
+  strive(){
+      throwexception("an error has occurred");
+  }
+  capture(){
+      pendown("an error has occurred");
+  ```
+  
