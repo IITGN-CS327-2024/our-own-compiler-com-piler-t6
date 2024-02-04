@@ -285,7 +285,7 @@ x %= 2; # x is now 1
 
 ## Logical Operators
 
-Logical operators in our programming language allow for the combination of boolean expressions and the manipulation of boolean values. These operators are fundamental in constructing complex conditional statements and making decisions based on multiple conditions. The logical operators available are `and`, `or`, and `not`.
+Logical operators in our programming language allow for the combination of boolean expressions and the manipulation of boolean values. These operators are fundamental in constructing complex conditional statements and making decisions based on multiple conditions. The logical operators available are `&&`, `$$`, and `!`.
 
 ### `&&` Operator
 The `&&` operator (same as `and` in Python) evaluates to True if both operands are True, and False otherwise.
