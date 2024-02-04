@@ -56,7 +56,6 @@ pendown("Hello, " + userName + "!");
   - doublepoint (`double`)
   - textwave (`string`)
   - flag (`bool`)
-  - null (`null`)
 
 ## Examples of Variable Declarations in Our Programming Language
 
