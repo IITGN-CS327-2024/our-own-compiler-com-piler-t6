@@ -285,34 +285,34 @@ x %= 2; # x is now 1
 
 ## Logical Operators
 
-Logical operators in our programming language allow for the combination of boolean expressions and the manipulation of boolean values. These operators are fundamental in constructing complex conditional statements and making decisions based on multiple conditions. The logical operators available are `and`, `or`, and `not`.
+Logical operators in our programming language allow for the combination of boolean expressions and the manipulation of boolean values. These operators are fundamental in constructing complex conditional statements and making decisions based on multiple conditions. The logical operators available are `&&`, `$$`, and `!`.
 
-### `and` Operator
-The `and` operator evaluates to True if both operands are True, and False otherwise.
+### `&&` Operator
+The `&&` operator (same as `and` in Python) evaluates to True if both operands are True, and False otherwise.
 
 ```plaintext
 # Example: Checking if two conditions are true
-Given (x > 10 and y < 20) {
+Given (x > 10 && y < 20) {
     pendown("Both conditions are true.");
 }
 ```
 
-### `or` Operator
-The `or` operator evaluates to True if at least one of the operands is True.
+### `$$` Operator
+The `$$` operator (same as `or` in Python) evaluates to True if at least one of the operands is True.
 
 ```plaintext
 # Example: Checking if at least one condition is true
-Given (x > 10 or y < 5) {
+Given (x > 10 $$ y < 5) {
     pendown("At least one condition is true.");
 }
 ```
 
-### `not` Operator
-The `not` operator inverts the boolean value of its operand.
+### `!` Operator
+The `!` operator (same as `not` in python) inverts the boolean value of its operand.
 
 ```plaintext
 # Example: Inverting a condition
-Given (not x == 10) {
+Given (! x == 10) {
     pendown("x is not equal to 10.");
 }
 ```
