@@ -366,7 +366,7 @@ Given (! x == 10) {
 
 ## Loops
 
-The iterate construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the for loop in many other languages but is tailored to the syntax and semantics of this language.
+The `iterate` construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the `for` loop in many other languages but is tailored to the syntax and semantics of this language.
 
 ### Looping Through a List
 
@@ -378,7 +378,7 @@ iterate (variable_name (int) = initialization; through list1;) {
 }
 ```
 
-This loop initializes variable_name and iterates through each element in list1, allowing the loop body to execute with each element.
+This loop initializes `variable_name` and iterates through each element in `list1`, allowing the loop body to execute with each element.
 
 ### Looping Through a Range
 
@@ -390,8 +390,8 @@ iterate (variable_name (int) = initialization; through range(start...end, step);
 }
 ```
 
-- start...end specifies the range of values to iterate through.
-- step determines the increment/decrement for each iteration. A negative step value implies a decrement.
+- `start...end` specifies the range of values to iterate through.
+- `step` determines the increment/decrement for each iteration. A negative step value implies a decrement.
 
 ### Examples
 
@@ -419,6 +419,38 @@ iterate (i (int) = 10; through range(10...0, -1);) {
 }
 ```
 
+### Using `interrupt` and `resume` in Loops
+
+In addition to the basic looping constructs, `interrupt` and `resume` provide control flow mechanisms similar to `break` and `continue` in other languages.
+
+- `interrupt` exits the loop immediately, skipping any remaining iterations.
+- `resume` skips the current iteration and proceeds with the next one.
+
+#### Example: Using `interrupt`
+
+```plaintext
+iterate (i (int) = 0; through range(0...5, 1);) {
+    if (i == 3) {
+        interrupt; # Exits the loop when i equals 3
+    }
+    pendown(i);
+}
+```
+
+#### Example: Using `resume`
+
+```plaintext
+iterate (i (int) = 0; through range(0...5, 1);) {
+    if (i == 3) {
+        resume; # Skips the current loop iteration when i equals 3
+    }
+    pendown(i);
+}
+```
+
+These constructs enhance the flexibility and control over the loop execution, allowing for more complex and dynamic flow control within loops.
+
+
 ## Function
 
 - **Syntax**:
@@ -431,12 +463,25 @@ iterate (i (int) = 10; through range(10...0, -1);) {
 
 ## Exception Handling
 
+- Strive is the keyword for try and capture is the keyword for except.
 - **Syntax**:
   ```plaintext
   strive(){
-      # Try block
+      x = 10
   }
   capture(){
-      # Catch block
+      pendown("Error has occurred: ; is missing");
   }
   ```
+
+- throwexception is used to raise error.
+
+- **Syntax**:
+  ```plaintext
+  strive(){
+      throwexception("an error has occurred");
+  }
+  capture(){
+      pendown("an error has occurred");
+  ```
+  
