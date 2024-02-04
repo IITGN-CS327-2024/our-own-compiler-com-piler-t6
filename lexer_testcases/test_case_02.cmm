@@ -1,0 +1,11 @@
+myNum1 (integer) = 5;
+myNum2 (integer) = 10;
+sum (integer) = myNum1 + myNum2;
+diff (integer) = myNum2 - myNum1; 
+product (integer) = myNum1 * myNum2;
+quotient (floatpoint) = myNum2 / myNum1;
+
+myIncrement (integer) = 0;
+myIncrement++; 
+myDecrement (integer) = 10;
+myDecrement--; 

@@ -1,0 +1,15 @@
+# This is a single line comment
+
+"""
+This is a multi-line comment
+spanning multiple lines.
+"""
+
+myInteger (integer) = 10;
+pendown("Hello, World!");
+
+# Testing character and boolean literals
+myChar (character) = 'c';
+myBool (flag) = True;
+myfloat (floatpoint) = 1.2;
+mydouble (doublepoint) = 1.2345;
