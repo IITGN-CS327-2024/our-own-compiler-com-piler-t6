@@ -31,9 +31,9 @@
 
 - To print data to the console. It allows the display of text messages, variables, or the results of expressions directly in the console using the `pendown` function as follows:
   
-```
 example -
-print a simple greeting message:
+```plaintext
+#print a simple greeting message:
 pendown("Hello, World!");
 ```
 
@@ -41,8 +41,7 @@ pendown("Hello, World!");
 
 - In our programming language, capturing user input from the console is facilitated through the `penup` function. This function is analogous to input mechanisms in other languages, designed to pause program execution and wait for the user to enter data, which is then returned as a string for further processing. Here's how you can use `penup` to capture and utilize user input in your programs:
   
-```
-plaintext
+```plaintext
 # Example: Capturing a user's name and printing a greeting message
 userName (textwave) = penup("Please enter your name: ");
 pendown("Hello, " + userName + "!");
@@ -117,14 +116,6 @@ pendown("Hello, " + userName + "!");
   ```plaintext
   anotherFlag (flag) = False;
   ```
-- ## Null
-
-  A null variable declaration example:
-
-
-  ```plaintext
-  myNullValue (null) = null;
-  ```
 
 # Arithmetic Operations
 
@@ -140,7 +131,7 @@ Unary operations involve a single operand. Here are the basic unary arithmetic o
 
 ```plaintext
 a (integer) = 10;
-c (int) = -a; # c = -10 (Negation)
+c (integer) = -a; # c = -10 (Negation)
 c++; # c = -9 (Increment)
 c--; # c = -10 (Decrement)
 ```
@@ -315,7 +306,7 @@ Given (not x == 10) {
 
 ## Array
 
-- **Syntax**: `variable_name (data_type, size) = ||
+- **Syntax**: `variable_name (data_type, size) = { }
 - - **Predefined Functions**:
   - `.dim()`: Returns the dimension of the array.
   - `.exchange(index, element)`: Exchanges the element at the specified index.
