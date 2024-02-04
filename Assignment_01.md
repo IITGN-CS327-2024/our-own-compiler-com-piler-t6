@@ -2,61 +2,64 @@
 
 ## Entry Point of Code
 
-- Same as Python
-- The program will automatically identify an `entry` block or `main` function as the starting point for execution.
+- The program execution starts from the first line of the script and proceeds sequentially. (same as Python)
 
-## End Point of line `;`
-
-- The end point of a line can be determined using semicolon notation. If the last character on a line is a semicolon, then that line ends.
-
-```plaintext
-myInteger int = 20;
-```
+## End Point of a statement `;`
+- The endpoint of a statement can be determined using semicolon notation. If the last character on a line is a semicolon, that line/statement ends.
+  
+  ```
+  myInteger <int> = 20;
+  ```
 
 ## Comments
-
 - **Single-line Comment**: `#`
+  
   ```
   #This is a simple comment and it will be ignored by the compiler
   ```
-- **Multi-line Comment**: `"""`
+- **Multi-line Comment**: `"""  """`
+  
   ```
   """
   This is a simple comment.
   It spans multiple lines, so you can write whatever you want here.
-  The compiler will ignore this entire block until the next ` or EOF.
+  The compiler will ignore this entire block until the next """ or EOF.
   """
   ```
 
 ## Pendown Function
 
-To print data to the console, use the `pendown` function as follows:
-
-```plaintext
-pendown("Your message or variable here");
+- To print data to the console. It allows the display of text messages, variables, or the results of expressions directly in the console using the `pendown` function as follows:
+  
 ```
-
-### Example of Pendown function
-
-Print a simple greeting message:
-
-```plaintext
+example -
+print a simple greeting message:
 pendown("Hello, World!");
 ```
 
-## Variables
+## Penup Function for User Input
 
+- In our programming language, capturing user input from the console is facilitated through the `penup` function. This function is analogous to input mechanisms in other languages, designed to pause program execution and wait for the user to enter data, which is then returned as a string for further processing. Here's how you can use `penup` to capture and utilize user input in your programs:
+  
+```
+plaintext
+# Example: Capturing a user's name and printing a greeting message
+userName <textwave> = penup("Please enter your name: ");
+pendown("Hello, " + userName + "!");
+```
+
+## Variables and datatypes
 - **Syntax**: `variable_name <data_type> = literal`
 - **Primitive Data Types**:
-  - integer (`int`)
-  - character (`char`)
-  - floatpoint (`float`)
+  - integer (`integer`)
+  - character (`character`)
+  - floatpoint (`floating point`)
   - doublepoint (`double`)
   - textwave (`string`)
   - flag (`bool`)
   - null (`null`)
 
-# Examples of Variable Declarations in Our Programming Language
+## Examples of Variable Declarations in Our Programming Language
 
   This document provides examples of how to declare variables using different primitive data types in our programming language.
 
@@ -66,7 +69,7 @@ pendown("Hello, World!");
 
 
   ```plaintext
-  myInteger <int> = 10;
+  myInteger <integer> = 10;
   ```
 - ## Character
 
@@ -74,7 +77,7 @@ pendown("Hello, World!");
 
 
   ```plaintext
-  myCharacter <char> = 'A';
+  myCharacter <character> = 'A';
   ```
 - ## Floatpoint
 
@@ -82,7 +85,7 @@ pendown("Hello, World!");
 
 
   ```plaintext
-  myFloat <float> = 3.14;
+  myFloat <floatpoint> = 3.14;
   ```
 - ## Doublepoint
 
@@ -90,7 +93,7 @@ pendown("Hello, World!");
 
 
   ```plaintext
-  myDouble <double> = 3.1415926535;
+  myDouble <doublepoint> = 3.1415926535;
   ```
 - ## Textwave (Strings)
 
@@ -124,6 +127,23 @@ pendown("Hello, World!");
   ```
 
 # Arithmetic Operations
+
+## Unary Operations
+
+Unary operations involve a single operand. Here are the basic unary arithmetic operations:
+- **unary plus operator (+):** Returns the value of its operand
+- **unary minus operator (-):** Returns the negative of the value of its operand.
+- **Increment (++):** Increases the value of a variable by one. This can be pre-increment or post-increment.
+- **Decrement (--):** Decreases the value of a variable by one. This can be pre-decrement or post-decrement.
+
+### Unary Operations Examples
+
+```plaintext
+a <integer> = 10;
+c <int> = -a; # c = -10 (Negation)
+c++; # c = -9 (Increment)
+c--; # c = -10 (Decrement)
+```
 
 ## Binary Operations
 
@@ -162,22 +182,6 @@ Binary operations involve two operands. Here are the basic binary arithmetic ope
 # Exponentiation
  power <double> = a ^ 2; # power = 100.0
 
-```
-
-## Unary Operations
-
-Unary operations involve a single operand. Here are the basic unary arithmetic operations:
-
-- **Negation (-):** Changes the sign of a number from positive to negative or vice versa.
-- **Increment (++):** Increases the value of a number by one. This can be pre-increment or post-increment.
-- **Decrement (--):** Decreases the value of a number by one. This can be pre-decrement or post-decrement.
-
-### Unary Operations Examples
-
-```plaintext
- c <int> = -a; # c = -10 (Negation)
-c++; # c = -9 (Increment)
-c--; # c = -10 (Decrement)
 ```
 
 # Comparison and Assignment Operators
@@ -271,19 +275,53 @@ x %= 2; # x is now 1
 
 ```
 
+## Logical Operators
+
+Logical operators in our programming language allow for the combination of boolean expressions and the manipulation of boolean values. These operators are fundamental in constructing complex conditional statements and making decisions based on multiple conditions. The logical operators available are `and`, `or`, and `not`.
+
+### `and` Operator
+The `and` operator evaluates to True if both operands are True, and False otherwise.
+
+```plaintext
+# Example: Checking if two conditions are true
+Given (x > 10 and y < 20) {
+    pendown("Both conditions are true.");
+}
+```
+
+### `or` Operator
+The `or` operator evaluates to True if at least one of the operands is True.
+
+```plaintext
+# Example: Checking if at least one condition is true
+Given (x > 10 or y < 5) {
+    pendown("At least one condition is true.");
+}
+```
+
+### `not` Operator
+The `not` operator inverts the boolean value of its operand.
+
+```plaintext
+# Example: Inverting a condition
+Given (not x == 10) {
+    pendown("x is not equal to 10.");
+}
+```
+
 ## **Immutability**: Variables are immutable.
 
 - immute variable_name <data_type> = literal
 
 ## Array
 
-- **Syntax**: `variable_name <data_type, size> =
-- **Predefined Functions**:
+- **Syntax**: `variable_name <data_type, size> = ||
+- - **Predefined Functions**:
   - `.dim()`: Returns the dimension of the array.
   - `.exchange(index, element)`: Exchanges the element at the specified index.
   - `.getidx(value)`: Returns the index of the given value.
   - `.sort(asc/dsc)`: Sorts the array in ascending or descending order.
-  - `variable_name[ : , jump]`: Slicing and jumping through elements.
+  - `.tail()`: return the tail of the array.
 
 ## List
 
