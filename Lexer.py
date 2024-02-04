@@ -89,7 +89,6 @@ class Lexer:
         }
         self.combined_pattern = '|'.join(f'(?P<{k}>{v})' for k, v in self.token_patterns.items())
 
-
     def tokenize(self, code):
         tokens = []
         for match in re.finditer(self.combined_pattern, code):
