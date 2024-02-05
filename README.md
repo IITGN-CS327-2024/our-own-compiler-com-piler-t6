@@ -1,3 +1,5 @@
+# CS 327: Compiler
+
 Contains all codes for the CS 327 Compilers course. Group 6.
 
 ## Assignment 1
