@@ -1,0 +1,8 @@
+fn sum(a (integer), b(integer)) {
+    result (integer) = a + b;
+    exitwith result;
+}
+
+iterate (i (integer) = 0; through range(0.1 ... 5.2, 0.1);) {
+    pendown(i);
+}
