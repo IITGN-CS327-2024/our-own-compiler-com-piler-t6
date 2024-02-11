@@ -56,7 +56,7 @@ e.g. var1, var2, var3
 
 """
 
-import re, os
+import re, os, argparse
 
 class Lexer:
     def __init__(self):
@@ -98,31 +98,49 @@ class LexerOutputFormatter:
                 formatted_output.append(f'<{token_type}, "{token_value}">')
         return formatted_output
     
+def prcoess_File(file_path, lexer, output_folder):
+    with open(file_path, 'r') as file:
+        content = file.read()
+    tokens = lexer.tokenize(content)
 
+    formatted_output = LexerOutputFormatter.format(tokens)
 
-def main(input_folder, output_folder):
+    base_name = os.path.basename(file_path)
+    output_file_name = os.path.splitext(base_name)[0] + '_tokens.txt'
+    output_file_path = os.path.join(output_folder, output_file_name)
+
+    with open(output_file_path, 'w') as output_file:
+        for token in formatted_output:
+            output_file.write(token + '\n')
+
+def main():
+    parser = argparse.ArgumentParser(description='Lexer for processing files')
+    parser.add_argument('input_files', nargs='*', help='Input files to process')
+    parser.add_argument('--output', '-o', default='Assignment_2\lexer_output', help = 'Output directory for lexer output') 
+    args = parser.parse_args()
+
+    output_folder = args.output
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-    input_files = [f for f in os.listdir(input_folder) if f.endswith('.cmm')]
 
-    for input_file in input_files:
-        input_file_path = os.path.join(input_folder, input_file)
-        output_file_path = os.path.join(output_folder, input_file.replace('.cmm', '_output.txt'))
+    lexer = Lexer()
 
-        with open(input_file_path, 'r') as file:
-            code = file.read()
+    if args.input_files:
+        for input_file in args.input_files:
+            prcoess_File(input_file, lexer, args.output)   
+    else:
+        input_folder = 'Assignment_2\lexer_testcases'
+        output_folder = 'Assignment_2\lexer_output'
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        input_files = [f for f in os.listdir(input_folder) if f.endswith('.cmm')]
 
-        lexer = Lexer()
-        tokens = lexer.tokenize(code)
+        for input_file in input_files:
+            input_file_path = os.path.join(input_folder, input_file)
+            prcoess_File(input_file_path, lexer, output_folder)
 
-        formatter = LexerOutputFormatter()
-        formatted_output = formatter.format(tokens)
-
-        with open(output_file_path, 'w') as file:
-            for token in formatted_output:
-                file.write(token + '\n')
-
+        
 if __name__ == "__main__":
-    input_folder = 'our-own-compiler-com-piler-t6/lexer_testcases'
-    output_folder = 'our-own-compiler-com-piler-t6/lexer_output'
-    main(input_folder, output_folder)
+    main()
+
+    

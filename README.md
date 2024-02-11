@@ -18,6 +18,9 @@ Refer to the [Lexer Output Folder](https://github.com/IITGN-CS327-2024/our-own-c
 
 Refer to the [Lexer.py File](https://github.com/IITGN-CS327-2024/our-own-compiler-com-piler-t6/blob/main/Assignment%202/Lexer.py) to checkout our lexer for C--.
 
+## Assignment 3
+
+Refer to the [Parser.py File]() to checkout our parser for C--.
 
 ## Group Members
 
