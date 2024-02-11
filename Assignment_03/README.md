@@ -22,37 +22,18 @@ The `parser.py` script is designed to perform the following operations:
 
 ### Processing a Single File
 
-To parse a specific `.cmm` file and display its tokens:
-
+To parse a single `.cmm` file, use the following command, replacing `path/to/your_file.cmm` with the actual path to your file
 ```sh
 python parser.py --input_file path/to/your_file.cmm
 ```
 
 ### Processing Multiple Files in a Directory
 
-To parse all `.cmm` files within a specified directory and display their tokens:
+To parse all `.cmm` files in a directory, use the following command, replacing `path/to/your_directory` with the path to your directory:
 
 ```sh
 python parser.py --input_folder path/to/your_directory
 ```
-
-## Usage Instructions
-
-1. **Single File:**
-
-   To parse a single `.cmm` file, use the following command, replacing `path/to/your_file.cmm` with the actual path to your file:
-
-   ```sh
-   python parser.py --input_file path/to/your_file.cmm
-   ```
-
-2. **Directory:**
-
-   To parse all `.cmm` files in a directory, use the following command, replacing `path/to/your_directory` with the path to your directory:
-
-   ```sh
-   python parser.py --input_folder path/to/your_directory
-   ```
 
 ## Note:
 ### We have worked on the feedback provided in Assignment 02 and have made the following changes:
