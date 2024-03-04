@@ -47,16 +47,15 @@ Function Definition
   FuncBlock -> W1 DEFN
   DEFN -> W2 ARGS
   ARGS -> W3 W4
-  W4 -> W5 W6
-  W5 -> W7 W8 | W7 W5
-  W7 -> W9 W10
-  W10 -> W11 W12
-  W12 -> DataType W14
+  W4 -> W5 W6 | W5 W7
+  W5 -> W9 W10
+  W7 -> W11 W6 | W5 W7
+  W11 -> W13 W5
+  W10 -> W3 W12
+  W12 -> DataType W6
   W1 -> FN
   W2 -> Identifier
   W3 -> LPAREN
   W6 -> RPAREN
-  W8 -> COMMA
   W9 -> Identifier
-  W11 -> LPAREN
-  W14 -> RPAREN
+  W13 -> COMMA
