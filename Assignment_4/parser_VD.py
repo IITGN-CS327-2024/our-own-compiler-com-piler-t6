@@ -65,8 +65,8 @@ def parser_VD(inp):
 
 # Input stream of tokens
 inp = [
-  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True"],
-  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON"]
+  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal"],
+  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON"]
 ]
 
 for i in inp:
