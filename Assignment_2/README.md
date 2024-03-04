@@ -455,7 +455,7 @@ These constructs enhance the flexibility and control over the loop execution, al
 
 - **Syntax**:
   ```plaintext
-  fn function_name(data_type argument){
+  fn function_name(argument(datatype), ...){
       # Function body
       exitwith 0;
   }
