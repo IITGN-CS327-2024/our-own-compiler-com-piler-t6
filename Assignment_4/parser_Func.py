@@ -127,30 +127,30 @@ def parser_Funcs(inp):
 
 # Input stream of tokens
 inp = [
-  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True"],
-  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON"],
+  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal"],
+  ["Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON"],
   [
     "GIVEN", "LPAREN", "True", "RPAREN", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON","RCURLY", 
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON","RCURLY", 
     "ELSEGIVEN", "LPAREN", "False", "RPAREN", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON", "RCURLY",
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON", "RCURLY",
     "OTHERWISE", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON", "RCURLY"
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON", "RCURLY"
   ],
   [
     "GIVEN", "LPAREN", "True", "RPAREN", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON","RCURLY", 
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON","RCURLY", 
     "ELSEGIVEN", "LPAREN", "False", "RPAREN", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON", "RCURLY",
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON", "RCURLY",
     "OTHERWISE", "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON", 
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON", 
   ],
   [ 
     "FN", "Identifier", "LPAREN", 
     "Identifier", "LPAREN", "integer", "RPAREN", "COMMA", 
     "Identifier", "LPAREN", "floatpoint", "RPAREN", "RPAREN", 
     "LCURLY", 
-    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "True", "SEMICOLON",
+    "Identifier", "LPAREN", "floatpoint", "RPAREN", "EQUALS", "float_literal", "SEMICOLON",
   ]
 ]
 
