@@ -1,0 +1,326 @@
+Converting CFG to CNF (Chomsky Normal Form) for a few sections:
+
+Program -> Statements
+Statements -> Statement Statements | ε
+Statement -> VariableDecl | ImmutableVariableDecl | FunctionDecl | Loop | Conditional | ExceptionHandling | Comment | Assignment | UnaryOperation | PrintFunction | InputFunction | ArrayDecl | ListDecl | TupleDecl | DictionaryDecl | Block
+
+
+Variable Declaration
+  S -> VD_Content  X6
+  VD_Content -> X1 Expression
+  X1 -> X2 X7
+  X2 -> X3 X8
+  X3 -> X4 DataType
+  X4 -> X5 X9
+  X5 -> Identifier
+  X6 -> SEMICOLON
+  X7 -> EQUALS
+  X8 -> RPAREN
+  X9 -> LPAREN
+  DataType -> integer | character | floatpoint | doublepoint | textwave | flag
+  Expression -> integer_literal | char_literal | float_literal | True | False
+
+Conditionals
+  S → GivenBlock Y1 | GivenBlock OtherwiseBlock
+  Y1 → ElseGivenBlock OtherwiseBlock | ElseGivenBlock Y1
+  GivenBlock → GivenCondition Block
+  ElseGivenBlock → ElseGivenCondition Block
+  OtherwiseBlock → Otherwise Block
+  GivenCondition → Y3 Y2
+  ElseGivenCondition →  Y4 Y2
+  Y2 - > Y5 COND
+  COND -> Y6 Y7
+  Y6 -> Y8 Y9 | True | False
+  Y9 -> Operators Y10
+  Y3 -> GIVEN
+  Y4 -> ELSEGIVEN
+  Y5 -> LPAREN
+  Y7 -> RPAREN
+  Y8 -> Identifier
+  Y10 -> integer_literal | float_literal
+  Operators -> == | >= | !=
+  BLOCK -> Z1 Z2
+  Z1 -> Z3 Z4
+  Z4 -> VD_CONTENT X6
+  Z2 -> RCURLY
+  Z3 -> LCURLY
+
+Function Definition
+  S -> FuncBlock Block
+  FuncBlock -> W1 DEFN
+  DEFN -> W2 ARGS
+  ARGS -> W3 W4
+  W4 -> W5 W6 | W5 W7
+  W5 -> W9 W10
+  W7 -> W11 W6 | W5 W7
+  W11 -> W13 W5
+  W10 -> W3 W12
+  W12 -> DataType W6
+  W1 -> FN
+  W2 -> Identifier
+  W3 -> LPAREN
+  W6 -> RPAREN
+  W9 -> Identifier
+  W13 -> COMMA
+
+
+Program -> Statements | Epsilon
+Statements -> Statement MoreStatements
+MoreStatements -> Statement MoreStatements | Epsilon
+Epsilon -> ε
+
+Statement -> VariableDecl Statement1
+Statement1 -> ImmutableVariableDecl Statement2
+Statement2 -> FunctionDecl Statement3
+Statement3 -> Loop Statement4
+Statement4 -> Conditional Statement5
+Statement5 -> ExceptionHandling Statement6
+Statement6 -> Comment Statement7
+Statement7 -> Assignment Statement8
+Statement8 -> UnaryOperation Statement9
+Statement9 -> PrintFunction Statement10
+Statement10 -> InputFunction Statement11
+Statement11 -> ArrayDecl Statement12
+Statement12 -> ListDecl Statement13
+Statement13 -> TupleDecl Statement14
+Statement14 -> DictionaryDecl Block
+
+
+LPAREN -> "("
+RPAREN -> ")"
+EQUALTO -> "="
+ENDOST -> ";"
+IMMUTE -> "immute"
+LPAREN -> "("
+RPAREN -> ")"
+EQUALTO -> "="
+ENDOST -> ";"
+INTEGER -> "integer"
+CHARACTER -> "character"
+FLOATPOINT -> "floatpoint"
+TEXTWAVE -> "textwave"
+FLAG -> "flag"
+PLUS -> "+"
+MINUS -> "-"
+STAR -> "*"
+SLASH -> "/"
+PERCENT -> "%"
+CARET -> "^"
+AND -> "&&"
+OR -> "$$"
+NOT -> "!"
+TRUE -> "True"
+FALSE -> "False"
+LPAREN -> "("
+RPAREN -> ")"
+QUOTE -> "\""
+LSQUARE -> "["
+RSQUARE -> "]"
+COLON -> ":"
+DOT -> "."
+TRUE -> "True"
+FALSE -> "False"
+QUOTE -> "\""
+FN -> "fn"
+LPAREN -> "("
+RPAREN -> ")"
+COMMA -> ","
+WHILE -> "while"
+ITERATE -> "iterate"
+THROUGH -> "through"
+RANGE -> "range"
+DOTDOTDOT -> "..."
+COMMA -> ","
+INTERRUPT -> "interrupt"
+RESUME -> "resume"
+LPAREN -> "("
+RPAREN -> ")"
+EQUALTO -> "="
+ENDOST -> ";"
+STRIVE -> "strive"
+CAPTURE -> "capture"
+LPAREN -> "("
+RPAREN -> ")"
+INCREMENT -> "++"
+DECREMENT -> "--"
+EQUALTO -> "="
+PLUSEQUAL -> "+="
+MINUSEQUAL -> "-="
+TIMESEQUAL -> "*="
+DIVIDEEQUAL -> "/="
+MODEQUAL -> "%="
+ENDOST -> ";"
+LPAREN -> "("
+RPAREN -> ")"
+LCURL -> "{"
+RCURL -> "}"
+LSQUARE -> "["
+RSQUARE -> "]"
+COMMA -> ","
+COLON -> ":"
+EQUALTO -> "="
+ENDOST -> ";"
+
+
+
+
+
+DataType -> INTEGER | CHARACTER | FLOATPOINT | TEXTWAVE | FLAG
+
+
+VariableDecl -> VariableName VariableDecl1
+VariableDecl1 -> LPAREN VariableDecl2
+VariableDecl2 -> DataType VariableDecl3
+VariableDecl3 -> RPAREN VariableDecl4
+VariableDecl4 -> EQUALTO VariableDecl5
+VariableDecl5 -> Expression VariableDecl6
+VariableDecl6 -> ENDOST
+
+ImmutableVariableDecl -> IMMUTE ImmutableVariableDecl1
+ImmutableVariableDecl1 -> VariableName ImmutableVariableDecl2
+ImmutableVariableDecl2 -> LPAREN ImmutableVariableDecl3
+ImmutableVariableDecl3 -> DataType ImmutableVariableDecl4
+ImmutableVariableDecl4 -> RPAREN ImmutableVariableDecl5
+ImmutableVariableDecl5 -> EQUALTO ImmutableVariableDecl6
+ImmutableVariableDecl6 -> Literal ImmutableVariableDecl7
+ImmutableVariableDecl7 -> ENDOST
+
+Expression -> SimpleExpression | LogicalExpr | Expression1 | Expression2
+Expression1 -> AccessExpression
+Expression2 -> DictionaryAccess
+
+SimpleExpression -> Term SimpleExpression1
+SimpleExpression1 -> BinaryOperator Term
+
+Term -> Factor | Term1
+Term1 -> LPAREN Expression RPAREN
+
+Factor -> VariableName | Factor1 | Factor2 | Factor3 | Factor4
+Factor1 -> Number
+Factor2 -> FloatNumber
+Factor3 -> QUOTE AnyText QUOTE
+Factor4 -> TRUE | FALSE
+
+BinaryOperator -> PLUS | MINUS | BinaryOperator1
+BinaryOperator1 -> STAR | BinaryOperator2
+BinaryOperator2 -> SLASH | BinaryOperator3
+BinaryOperator3 -> PERCENT | CARET
+
+LogicalExpr -> Expression LogicalExpr1
+LogicalExpr1 -> LogicalOperator Expression
+
+LogicalOperator -> AND | OR | NOT
+
+Number -> Digit NumberRest
+NumberRest -> Digit NumberRest | Epsilon
+
+Digit -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+FloatNumber -> Number DOTNumber
+DOTNumber -> DOT Number
+
+Literal -> Number | FloatNumber | Literal1 | TRUE | FALSE
+Literal1 -> QUOTE AnyText QUOTE
+
+AccessExpression -> VariableName AccessOperator
+
+AccessOperator -> LSQUARE AccessOperator1
+AccessOperator1 -> Number AccessOperator2
+AccessOperator2 -> RSQUARE | COLON Number RSQUARE
+
+DictionaryAccess -> VariableName DictionaryAccess1
+DictionaryAccess1 -> LSQUARE Key RSQUARE
+
+
+Loop -> WhileLoop | IterateLoop1
+IterateLoop1 -> IterateLoop | RangeLoop
+WhileLoop -> WHILE WhileLoop1
+WhileLoop1 -> LPAREN WhileLoop2
+WhileLoop2 -> Condition WhileLoop3
+WhileLoop3 -> RPAREN WhileLoop4
+WhileLoop4 -> Block LoopStatements
+IterateLoop -> ITERATE IterateLoop1
+IterateLoop1 -> LPAREN IterateLoop2
+IterateLoop2 -> VariableName IterateLoop3
+IterateLoop3 -> LPAREN IterateLoop4
+IterateLoop4 -> DataType IterateLoop5
+IterateLoop5 -> RPAREN IterateLoop6
+IterateLoop6 -> EQUALTO IterateLoop7
+IterateLoop7 -> Expression IterateLoop8
+IterateLoop8 -> ENDOST IterateLoop9
+IterateLoop9 -> THROUGH IterateLoop10
+IterateLoop10 -> ListName IterateLoop11
+IterateLoop11 -> ENDOST IterateLoop12
+IterateLoop12 -> RPAREN Block
+RangeLoop -> ITERATE RangeLoop1
+RangeLoop1 -> LPAREN RangeLoop2
+RangeLoop2 -> VariableName RangeLoop3
+RangeLoop3 -> LPAREN RangeLoop4
+RangeLoop4 -> DataType RangeLoop5
+RangeLoop5 -> RPAREN RangeLoop6
+RangeLoop6 -> EQUALTO RangeLoop7
+RangeLoop7 -> Expression RangeLoop8
+RangeLoop8 -> ENDOST RangeLoop9
+RangeLoop9 -> THROUGH RangeLoop10
+RangeLoop10 -> RANGE RangeLoop11
+RangeLoop11 -> LPAREN RangeLoop12
+RangeLoop12 -> Expression RangeLoop13
+RangeLoop13 -> DOTDOTDOT RangeLoop14
+RangeLoop14 -> Expression RangeLoop15
+RangeLoop15 -> COMMA RangeLoop16
+RangeLoop16 -> Expression RangeLoop17
+RangeLoop17 -> RPAREN ENDOST RangeLoop18
+RangeLoop18 -> RPAREN Block
+LoopStatements -> LoopStatement LoopStatements | Epsilon
+LoopStatement -> Statement | LoopInterrupt1
+LoopInterrupt1 -> LoopInterrupt | LoopResume
+LoopInterrupt -> INTERRUPT ENDOST
+LoopResume -> RESUME ENDOST
+
+
+
+
+UnaryOperation -> VariableName UnaryOperation1
+UnaryOperation1 -> INCREMENT ENDOST | DECREMENT UnaryOperationEnd
+UnaryOperationEnd -> ENDOST
+Assignment -> VariableName Assignment1
+Assignment1 -> EQUALTO Assignment2 | AssignmentOperator Assignment2
+Assignment2 -> Expression ENDOST
+AssignmentOperator -> PLUSEQUAL | MINUSEQUAL1
+MINUSEQUAL1 -> MINUSEQUAL | TIMESEQUAL1
+TIMESEQUAL1 -> TIMESEQUAL | DIVIDEEQUAL1
+DIVIDEEQUAL1 -> DIVIDEEQUAL | MODEQUAL
+
+
+ArrayDecl -> VariableName ArrayDecl1
+ArrayDecl1 -> LPAREN ArrayDecl2
+ArrayDecl2 -> DataType ArrayDecl3
+ArrayDecl3 -> COMMA ArrayDecl4
+ArrayDecl4 -> Number ArrayDecl5
+ArrayDecl5 -> RPAREN ArrayDecl6
+ArrayDecl6 -> EQUALTO ArrayDecl7
+ArrayDecl7 -> LCURL ArrayDecl8
+ArrayDecl8 -> Elements RCURL ENDOST
+
+ListDecl -> VariableName ListDecl1
+ListDecl1 -> EQUALTO ListDecl2
+ListDecl2 -> LSQUARE Elements RSQUARE ENDOST
+
+TupleDecl -> VariableName TupleDecl1
+TupleDecl1 -> EQUALTO TupleDecl2
+TupleDecl2 -> LPAREN Elements RPAREN ENDOST
+
+DictionaryDecl -> VariableName DictionaryDecl1
+DictionaryDecl1 -> EQUALTO DictionaryDecl2
+DictionaryDecl2 -> LCURL KeyValues RCURL ENDOST
+Elements -> Element ElementsRest | Epsilon
+ElementsRest -> COMMAElement ElementsRest | Epsilon
+COMMAElement -> COMMA Element
+KeyValues -> KeyValue KeyValuesRest | Epsilon
+KeyValuesRest -> COMMAKeyValue KeyValuesRest | Epsilon
+COMMAKeyValue -> COMMA KeyValue
+Element -> Expression
+KeyValue -> Key KeyValue1
+KeyValue1 -> COLON Value
+
+

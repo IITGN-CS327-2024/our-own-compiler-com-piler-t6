@@ -1,0 +1,124 @@
+Program -> Statements
+Statements -> Statement Statements | ε
+Statement -> VariableDecl | ImmutableVariableDecl | FunctionDecl | Loop | Conditional | ExceptionHandling | Comment | Assignment | UnaryOperation | PrintFunction | InputFunction | ArrayDecl | ListDecl | TupleDecl | DictionaryDecl | Block
+
+VariableDecl -> VariableName LPAREN DataType RPAREN EQUALTO Expression ENDOST
+ImmutableVariableDecl -> "immute" VariableName LPAREN DataType RPAREN EQUALTO Literal ENDOST
+DataType -> "integer" | "character" | "floatpoint" | "textwave" | "flag"
+
+Expression -> SimpleExpression | LogicalExpr | AccessExpression | DictionaryAccess
+SimpleExpression -> Term | SimpleExpression BinaryOperator Term
+Term -> Factor | LPAREN Expression RPAREN
+Factor -> VariableName | Number | FloatNumber | QUOTE AnyText QUOTE | "True" | "False"
+BinaryOperator -> "+" | "-" | "*" | "/" | "%" | "^"
+LogicalExpr -> Expression LogicalOperator Expression
+LogicalOperator -> "&&" | "$$" | "!"
+
+AccessExpression -> VariableName AccessOperator
+AccessOperator -> LSQUARE Number RSQUARE | LSQUARE Number COLON Number RSQUARE
+DictionaryAccess -> VariableName LSQUARE Key RSQUARE
+
+
+Number -> Digit Number | Digit
+FloatNumber -> Number DOT Number
+Literal -> Number | FloatNumber | QUOTE AnyText QUOTE | "True" | "False"
+Digit -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+QUOTE -> "\""
+
+
+FunctionDecl -> "fn" FunctionName LPAREN Arguments RPAREN Block
+FunctionName -> VariableName
+Arguments -> Argument ArgumentsRest | ε
+ArgumentsRest -> COMMA Argument ArgumentsRest | ε
+Argument -> VariableName LPAREN DataType RPAREN
+
+Conditional -> GivenClause ElseGivenClause OtherwiseClause
+GivenClause -> "Given" LPAREN Expression RPAREN Block
+ElseGivenClause -> "ElseGiven" LPAREN Expression RPAREN Block | ε
+OtherwiseClause -> "Otherwise" Block | ε
+
+Loop -> WhileLoop | IterateLoop | RangeLoop
+WhileLoop -> "while" LPAREN Condition RPAREN Block LoopStatements
+IterateLoop -> "iterate" LPAREN VariableName LPAREN DataType RPAREN EQUALTO Expression ENDOST "through" VariableName ENDOST RPAREN Block
+RangeLoop -> "iterate" LPAREN VariableName LPAREN DataType RPAREN EQUALTO Expression ENDOST "through" "range" LPAREN Expression DOTDOTDOT Expression COMMA Expression RPAREN ENDOST RPAREN Block
+LoopStatements -> LoopStatement LoopStatements | ε
+LoopStatement -> Statement | LoopInterrupt | LoopResume
+LoopInterrupt -> "interrupt" ENDOST
+LoopResume -> "resume" ENDOST
+
+ExceptionHandling -> StriveBlock CaptureBlock
+StriveBlock -> "strive" Block
+CaptureBlock -> "capture" LPAREN VariableName RPAREN Block | "capture" Block
+
+UnaryOperation -> VariableName INCREMENT ENDOST | VariableName DECREMENT ENDOST
+INCREMENT -> "++"
+DECREMENT -> "--"
+Assignment -> VariableName EQUALTO Expression ENDOST | VariableName AssignmentOperator Expression ENDOST
+AssignmentOperator -> PLUSEQUAL | MINUSEQUAL | TIMESEQUAL | DIVIDEEQUAL | MODEQUAL
+PLUSEQUAL -> "+="
+MINUSEQUAL -> "-="
+TIMESEQUAL -> "*="
+DIVIDEEQUAL -> "/="
+MODEQUAL -> "%="
+
+ArrayDecl -> VariableName LPAREN DataType COMMA Number RPAREN EQUALTO LCURL Elements RCURL ENDOST
+ListDecl -> VariableName EQUALTO LSQUARE Elements RSQUARE ENDOST
+TupleDecl -> VariableName EQUALTO LPAREN Elements RPAREN ENDOST
+DictionaryDecl -> VariableName EQUALTO LCURL KeyValues RCURL ENDOST
+Elements -> Element ElementsRest | ε
+ElementsRest -> COMMA Element ElementsRest | ε
+Element -> Expression
+KeyValues -> KeyValue KeyValuesRest | ε
+KeyValuesRest -> COMMA KeyValue KeyValuesRest | ε
+KeyValue -> Key COLON Value
+
+ArrayMethods -> ArrayDim | ArrayExchange | ArrayGetIdx | ArraySort | ArrayTail | ArrayHead
+ListMethods -> ListDim | ListExchange | ListGetIdx | ListSort | ListTail | ListHead | ListAdd | ListRemove
+TupleMethods -> TupleDim | TupleExchange | TupleGetIdx | TupleSort | TupleTail | TupleHead
+DictionaryMethods -> DictionarySet
+
+ArrayDim -> VariableName DOT "dim" LPAREN RPAREN ENDOST
+ArrayExchange -> VariableName DOT "exchange" LPAREN Number COMMA Element RPAREN ENDOST
+ArrayGetIdx -> VariableName DOT "getidx" LPAREN Element RPAREN ENDOST
+ArraySort -> VariableName DOT "sort" LPAREN SortOrder RPAREN ENDOST
+ArrayTail -> VariableName DOT "tail" LPAREN RPAREN ENDOST
+ArrayHead -> VariableName DOT "head" LPAREN RPAREN ENDOST
+
+ListAdd -> VariableName DOT "add" LPAREN Element RPAREN ENDOST
+ListRemove -> VariableName DOT "remove" LPAREN Number RPAREN ENDOST
+
+DictionarySet -> VariableName DOT "set" LPAREN Key COMMA Value RPAREN ENDOST
+
+SortOrder -> "Asc" | "Dsc"
+Key -> Expression
+Value -> Expression
+
+VariableName -> Identifier
+Identifier -> Letter | "_" | Identifier IdentifierDigits
+IdentifierDigits -> Identifier Digit | Identifier Letter | ε
+Letter -> "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+
+
+AnyText -> AnyChar AnyText | ε
+AnyChar -> Letter | Digit | AnySymbol
+AnySymbol -> " " | "!" | "@" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~"
+
+PrintFunction -> "pendown" LPAREN FunctionArgs RPAREN ENDOST
+InputFunction -> "penup" LPAREN FunctionArgs RPAREN ENDOST
+FunctionArgs -> FunctionArg FunctionArgsRest | ε
+FunctionArgsRest -> COMMA FunctionArg FunctionArgsRest | ε
+FunctionArg -> Expression
+
+Block -> LCURL Statements RCURL
+LCURL -> "{"
+RCURL -> "}"
+LPAREN -> "("
+RPAREN -> ")"
+LSQUARE -> "["
+RSQUARE -> "]"
+LCURL -> "{"
+RCURL -> "}"
+COMMA -> ","
+DOT -> "."
+COLON -> ":"
+ENDOST -> ";"

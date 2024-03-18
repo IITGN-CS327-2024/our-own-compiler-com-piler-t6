@@ -1,0 +1,708 @@
+Program -> Statements | Epsilon
+Statements -> Statement MoreStatements
+MoreStatements -> Statement MoreStatements
+Statement -> VariableDecl | ImmutableVariableDecl | FunctionDecl | Loop | Conditional | ExceptionHandling | Assignment | UnaryOperation | PrintFunction | InputFunction | ArrayDecl | ListDecl | TupleDecl | DictionaryDecl | Block
+
+VariableDecl -> VariableName VariableDecl1
+VariableDecl1 -> LPAREN VariableDecl2
+VariableDecl2 -> DataType VariableDecl3
+VariableDecl3 -> RPAREN VariableDecl4
+VariableDecl4 -> EQUALTO VariableDecl5
+VariableDecl5 -> Expression VariableDecl6
+VariableDecl6 -> ENDOST
+
+ImmutableVariableDecl -> IMMUTE ImmutableVariableDecl1
+ImmutableVariableDecl1 -> VariableName ImmutableVariableDecl2
+ImmutableVariableDecl2 -> LPAREN ImmutableVariableDecl3
+ImmutableVariableDecl3 -> DataType ImmutableVariableDecl4
+ImmutableVariableDecl4 -> RPAREN ImmutableVariableDecl5
+ImmutableVariableDecl5 -> EQUALTO ImmutableVariableDecl6
+ImmutableVariableDecl6 -> Literal ImmutableVariableDecl7
+ImmutableVariableDecl7 -> ENDOST
+
+Expression -> SimpleExpression | LogicalExpr |  AccessExpression | DictionaryAccess
+
+SimpleExpression -> Term | BinaryExpression
+BinaryExpression -> SimpleExpression BinaryOperatorTerm
+BinaryOperatorTerm -> BinaryOperator Term
+
+Term -> Factor | Term1
+Term1 -> Term2 Term3
+Term2 -> LPAREN
+Term3 -> Expression Term4
+Term4 -> RPAREN
+
+Factor -> VariableName | Number | FloatNumber | Anytext1 | TRUE | FALSE
+
+Anytext1 -> Anytext2 Anytext3
+Anytext2 -> QUOTE 
+Anytext3 -> AnyText Anytext4
+Anytext4 -> QUOTE
+
+AnyText -> AnyChar AnyText
+AnyChar -> Letter | Digit | AnySymbol | space space | "!" | "@" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+space -> "
+AnySymbol -> space space | "!" | "@" | "#" | "$" | "%" | "&" | "'" | "(" | ")" | "*" | "+" | "," | "-" | "." | "/" | ":" | ";" | "<" | "=" | ">" | "?" | "@" | "[" | "\\" | "]" | "^" | "_" | "`" | "{" | "|" | "}" | "~" | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+BinaryOperator -> PLUS | MINUS | STAR | SLASH | PERCENT | CARET
+
+LogicalExpr -> LogicalExpr1 Expression 
+LogicalExpr1 -> Expression LogicalOperator 
+
+LogicalOperator -> AND | OR | NOT
+
+Number -> Digit Number  | "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+FloatNumber -> FloatNumber1 Number
+FloatNumber1 -> Number DOT
+  
+
+Literal -> Number | FloatNumber | Literal1 | TRUE | FALSE
+Literal1 -> Liternal2 Liternal3
+Liternal2 -> QUOTE
+Liternal3 -> AnyText QUOTE
+
+
+AccessExpression -> VariableName AccessOperator
+AccessOperator -> LNUMBERR | LNUMBERCNUMBERR
+
+LNUMBERR -> LNUMBERR1 LNUMBERR2
+LNUMBERR1 -> LSQUARE 
+LNUMBERR2 -> Number LNUMBERR3 
+LNUMBERR3 -> RSQUARE
+
+LNUMBERCNUMBERR -> LNUMBERCNUMBERR1 LNUMBERCNUMBERR2
+LNUMBERCNUMBERR1 -> LN C
+C -> COLON
+LN -> LN1 Number
+LN1 -> LSQUARE
+LNUMBERCNUMBERR2 -> Number LNUMBERR3
+
+
+DictionaryAccess -> VariableName DictionaryAccess1
+DictionaryAccess1 -> DictionaryAccess2 DictionaryAccess3
+DictionaryAccess3 -> RSQUARE
+DictionaryAccess2 -> DictionaryAccess4 Key
+DictionaryAccess4 -> LSQUARE
+
+
+VariableName -> "_" | Identifier IdentifierDigits | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+Identifier -> "_" | Identifier IdentifierDigits | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+IdentifierDigits -> Identifier Digit | Identifier Letter
+
+DataType -> INTEGER | CHARACTER | FLOATPOINT | TEXTWAVE | FLAG
+
+
+FunctionDecl -> FN FunctionDecl1
+FunctionDecl1 -> FunctionName FunctionDecl2
+FunctionDecl2 -> LPAREN FunctionDecl3
+FunctionDecl3 -> Arguments FunctionDecl4
+FunctionDecl4 -> RPAREN Block
+
+FunctionName -> VariableName
+Arguments -> Argument ArgumentsRest 
+ArgumentsRest -> COMMAArgument ArgumentsRest
+COMMAArgument -> COMMA Argument
+Argument -> VariableName Argument1
+Argument1 -> LPAREN Argument2
+Argument2 -> DataType Argument3
+Argument3 -> RPAREN
+
+
+Conditional -> GivenClause Conditional1
+Conditional1 -> ElseGivenClause OtherwiseClause
+GivenClause -> GIVEN GivenClause1
+GivenClause1 -> LPAREN GivenClause2
+GivenClause2 -> Expression GivenClause3
+GivenClause3 -> RPAREN Block
+ElseGivenClause -> ELSEGIVEN ElseGivenClause1
+ElseGivenClause1 -> LPAREN ElseGivenClause2
+ElseGivenClause2 -> Expression ElseGivenClause3
+ElseGivenClause3 -> RPAREN Block
+OtherwiseClause -> OTHERWISE Block
+Loop -> WhileLoop | IterateLoop | RangeLoop
+WhileLoop -> WHILE WhileLoop1
+WhileLoop1 -> LPAREN WhileLoop2
+WhileLoop2 -> Condition WhileLoop3
+WhileLoop3 -> RPAREN WhileLoop4
+WhileLoop4 -> Block LoopStatements
+IterateLoop -> ITERATE IterateLoop1
+IterateLoop1 -> LPAREN IterateLoop2
+IterateLoop2 -> VariableName IterateLoop3
+IterateLoop3 -> LPAREN IterateLoop4
+IterateLoop4 -> DataType IterateLoop5
+IterateLoop5 -> RPAREN IterateLoop6
+IterateLoop6 -> EQUALTO IterateLoop7
+IterateLoop7 -> Expression IterateLoop8
+IterateLoop8 -> ENDOST IterateLoop9
+IterateLoop9 -> THROUGH IterateLoop10
+IterateLoop10 -> ListName IterateLoop11
+IterateLoop11 -> ENDOST IterateLoop12
+IterateLoop12 -> RPAREN Block
+RangeLoop -> ITERATE RangeLoop1
+RangeLoop1 -> LPAREN RangeLoop2
+RangeLoop2 -> VariableName RangeLoop3
+RangeLoop3 -> LPAREN RangeLoop4
+RangeLoop4 -> DataType RangeLoop5
+RangeLoop5 -> RPAREN RangeLoop6
+RangeLoop6 -> EQUALTO RangeLoop7
+RangeLoop7 -> Expression RangeLoop8
+RangeLoop8 -> ENDOST RangeLoop9
+RangeLoop9 -> THROUGH RangeLoop10
+RangeLoop10 -> RANGE RangeLoop11
+RangeLoop11 -> LPAREN RangeLoop12
+RangeLoop12 -> Expression RangeLoop13
+RangeLoop13 -> DOTDOTDOT RangeLoop14
+RangeLoop14 -> Expression RangeLoop15
+RangeLoop15 -> COMMA RangeLoop16
+RangeLoop16 -> Expression RangeLoop17
+RangeLoop17 -> RPAREN ENDOST RangeLoop18
+RangeLoop18 -> RPAREN Block
+
+LoopStatements -> LoopStatement LoopStatements 
+LoopStatement -> Statement | LoopInterrupt | LoopResume
+LoopInterrupt -> INTERRUPT ENDOST
+LoopResume -> RESUME ENDOST
+
+
+ExceptionHandling -> StriveBlock CaptureBlock
+StriveBlock -> STRIVE Block
+CaptureBlock -> CAPTURE CaptureBlockOption
+CaptureBlockOption -> CaptureWithParentheses | CaptureWithoutParentheses
+CaptureWithParentheses -> LPAREN VariableNameBlock
+VariableNameBlock -> VariableName RPARENBlock
+RPARENBlock -> RPAREN Block
+CaptureWithoutParentheses -> CAPTURE Block
+
+UnaryOperation -> VariableName UnaryOperation1
+UnaryOperation1 -> INCREMENT ENDOST | DECREMENT UnaryOperationEnd
+UnaryOperationEnd -> ENDOST
+
+
+
+Assignment -> VariableName Assignment1
+Assignment1 -> EQUALTO Assignment2 | AssignmentOperator Assignment2
+Assignment2 -> Expression ENDOST
+
+AssignmentOperator -> PLUSEQUAL | MINUSEQUAL | TIMESEQUAL | DIVIDEEQUAL | MODEQUAL
+
+
+ArrayDecl -> VariableName ArrayDecl1
+ArrayDecl1 -> LPAREN ArrayDecl2
+ArrayDecl2 -> DataType ArrayDecl3
+ArrayDecl3 -> COMMA ArrayDecl4
+ArrayDecl4 -> Number ArrayDecl5
+ArrayDecl5 -> RPAREN ArrayDecl6
+ArrayDecl6 -> EQUALTO ArrayDecl7
+ArrayDecl7 -> LCURL ArrayDecl8
+ArrayDecl8 -> Elements ArrayDecl9
+ArrayDecl9 -> RCURL ENDOST
+
+ListDecl -> VariableName ListDecl1
+ListDecl1 -> EQUALTO ListDecl2
+ListDecl2 -> LSQUARE ListDecl3
+ListDecl3 -> Elements ListDecl4
+ListDecl4 -> RSQUARE ENDOST
+
+TupleDecl -> VariableName TupleDecl1
+TupleDecl1 -> EQUALTO TupleDecl2
+TupleDecl2 -> LPAREN TupleDecl3
+TupleDecl3 -> Elements TupleDecl4
+TupleDecl4 -> RPAREN ENDOST
+
+DictionaryDecl -> VariableName DictionaryDecl1
+DictionaryDecl1 -> EQUALTO DictionaryDecl2
+DictionaryDecl2 -> LCURL DictionaryDecl3
+DictionaryDecl3 -> KeyValues DictionaryDecl4
+DictionaryDecl4 -> RCURL ENDOST
+
+
+Elements -> Element ElementsRest 
+ElementsRest -> COMMAElement ElementsRest 
+COMMAElement -> COMMA Element
+KeyValues -> KeyValue KeyValuesRest 
+KeyValuesRest -> COMMAKeyValue KeyValuesRest 
+COMMAKeyValue -> COMMA KeyValue
+Element -> Expression
+KeyValue -> Key KeyValue1
+KeyValue1 -> COLON Value
+
+ArrayMethods -> ArrayDim | ArrayExchange | ArrayGetIdx | ArraySort | ArrayTail | ArrayHead
+ListMethods -> ListDim | ListExchange | ListGetIdx | ListSort | ListTail | ListHead | ListAdd | ListRemove
+TupleMethods -> TupleDim | TupleExchange | TupleGetIdx | TupleSort | TupleTail | TupleHead
+DictionaryMethods -> DictionarySet
+
+ArrayDim -> VariableName ArrayDim1
+ArrayDim1 -> DOT ArrayDim2
+ArrayDim2 -> DIM ArrayDim3
+ArrayDim3 -> LPAREN ArrayDim4
+ArrayDim4 -> RPAREN ENDOST
+
+ArrayExchange -> VariableName ArrayExchange1
+ArrayExchange1 -> DOT ArrayExchange2
+ArrayExchange2 -> EXCHANGE ArrayExchange3
+ArrayExchange3 -> LPAREN ArrayExchange4
+ArrayExchange4 -> Number ArrayExchange5
+ArrayExchange5 -> COMMA ElementArrayExchange6
+ArrayExchange6 -> RPAREN ENDOST
+
+
+ArrayGetIdx -> VariableName ArrayGetIdx1
+ArrayGetIdx1 -> DOT ArrayGetIdx2
+ArrayGetIdx2 -> GETIDX ArrayGetIdx3
+ArrayGetIdx3 -> LPAREN ArrayGetIdx4
+ArrayGetIdx4 -> Element RPARENENDOST
+
+ArraySort -> VariableName ArraySort1
+ArraySort1 -> DOT ArraySort2
+ArraySort2 -> SORT ArraySort3
+ArraySort3 -> LPAREN ArraySort4
+ArraySort4 -> SortOrder RPARENENDOST
+
+ArrayTail -> VariableName ArrayTail1
+ArrayTail1 -> DOT ArrayTail2
+ArrayTail2 -> TAIL LPARENRPARENENDOST
+
+ArrayHead -> VariableName ArrayHead1
+ArrayHead1 -> DOT ArrayHead2
+ArrayHead2 -> HEAD LPARENRPARENENDOST
+
+ListAdd -> VariableName ListAdd1
+ListAdd1 -> DOT ListAdd2
+ListAdd2 -> ADD ListAdd3
+ListAdd3 -> LPAREN ListAdd4
+ListAdd4 -> Element RPARENENDOST
+
+ListRemove -> VariableName ListRemove1
+ListRemove1 -> DOT ListRemove2
+ListRemove2 -> REMOVE ListRemove3
+ListRemove3 -> LPAREN ListRemove4
+ListRemove4 -> Number RPARENENDOST
+
+DictionarySet -> VariableName DictionarySet1
+DictionarySet1 -> DOT DictionarySet2
+DictionarySet2 -> SET DictionarySet3
+DictionarySet3 -> LPAREN DictionarySet4
+DictionarySet4 -> Key COMMAValue
+COMMAValue -> COMMA ValueRPARENENDOST
+ValueRPARENENDOST -> Value RPARENENDOST
+RPARENENDOST -> RPAREN ENDOST
+
+
+
+SortOrder -> "Asc" | "Dsc"
+Key -> Expression
+Value -> Expression
+
+
+
+PENDOWN -> "pendown"
+PENUP -> "penup"
+LPAREN -> "("
+RPAREN -> ")"
+COMMA -> ","
+ENDOST -> ";"
+
+PrintFunction -> PENDOWN PrintFunction1
+PrintFunction1 -> LPAREN PrintFunction2
+PrintFunction2 -> FunctionArgs PrintFunction3
+PrintFunction3 -> RPAREN ENDOST
+
+InputFunction -> PENUP InputFunction1
+InputFunction1 -> LPAREN InputFunction2
+InputFunction2 -> FunctionArgs InputFunction3
+InputFunction3 -> RPAREN ENDOST
+
+FunctionArgs -> FunctionArg FunctionArgsRest 
+FunctionArgsRest -> COMMAFunctionArg FunctionArgsRest 
+COMMAFunctionArg -> COMMA FunctionArg
+
+Epsilon -> ε 
+Block -> LCURL Statements RCURL
+Letter -> "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+Digit -> "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+UNDERSCORE -> "_"
+Epsilon -> ε
+LPAREN -> "("
+RPAREN -> ")"
+EQUALTO -> "="
+ENDOST -> ";"
+IMMUTE -> "immute"
+INTEGER -> "integer"
+CHARACTER -> "character"
+FLOATPOINT -> "floatpoint"
+TEXTWAVE -> "textwave"
+FLAG -> "flag"
+PLUS -> "+"
+MINUS -> "-"
+STAR -> "*"
+SLASH -> "/"
+PERCENT -> "%"
+CARET -> "^"
+AND -> "&&"
+OR -> "$$"
+NOT -> "!"
+TRUE -> "True"
+FALSE -> "False"
+LPAREN -> "("
+RPAREN -> ")"
+QUOTE -> "\""
+LSQUARE -> "["
+RSQUARE -> "]"
+COLON -> ":"
+DOT -> "."
+QUOTE -> "\""
+FN -> "fn"
+LPAREN -> "("
+RPAREN -> ")"
+COMMA -> ","
+WHILE -> "while"
+ITERATE -> "iterate"
+THROUGH -> "through"
+RANGE -> "range"
+DOTDOTDOT -> "..."
+COMMA -> ","
+INTERRUPT -> "interrupt"
+RESUME -> "resume"
+LPAREN -> "("
+RPAREN -> ")"
+EQUALTO -> "="
+ENDOST -> ";"
+STRIVE -> "strive"
+CAPTURE -> "capture"
+LPAREN -> "("
+RPAREN -> ")"
+INCREMENT -> "++"
+DECREMENT -> "--"
+EQUALTO -> "="
+PLUSEQUAL -> "+="
+MINUSEQUAL -> "-="
+TIMESEQUAL -> "*="
+DIVIDEEQUAL -> "/="
+MODEQUAL -> "%="
+ENDOST -> ";"
+LPAREN -> "("
+RPAREN -> ")"
+LCURL -> "{"
+RCURL -> "}"
+LSQUARE -> "["
+RSQUARE -> "]"
+COMMA -> ","
+COLON -> ":"
+EQUALTO -> "="
+ENDOST -> ";"
+GIVEN -> "Given"
+ELSEGIVEN -> "ElseGiven"
+OTHERWISE -> "Otherwise"
+Condition -> Expression
+
+
+
+
+
+
+
+
+1: [['Statements']]
+2: [['Statements', 'MoreStatements']]
+3: [['Statements', 'MoreStatements']]
+4: [['VariableDecl'], ['ImmutableVariableDecl'], ['FunctionDecl'], ['Loop'], ['Conditional'], ['ExceptionHandling'], ['UnaryOperation'], ['Assignment'], ['PrintFunction'], ['InputFunction'], ['ArrayDecl'], ['ListDecl'], ['TupleDecl'], ['DictionaryDecl'], ['Block']]
+5: [['VariableName', 'VariableDecl1']]
+6: [['LPAREN', 'VariableDecl2']]
+7: [['DataType', 'VariableDecl3']]
+8: [['RPAREN', 'VariableDecl4']]
+9: [['EQUALTO', 'VariableDecl5']]
+10: [['Expression', 'VariableDecl6']]
+11: [['ENDOST']]
+12: [['IMMUTE', 'ImmutableVariableDecl1']]
+13: [['VariableName', 'ImmutableVariableDecl2']]
+14: [['LPAREN', 'ImmutableVariableDecl3']]
+15: [['DataType', 'ImmutableVariableDecl4']]
+16: [['RPAREN', 'ImmutableVariableDecl5']]
+17: [['EQUALTO', 'ImmutableVariableDecl6']]
+18: [['Literal', 'ImmutableVariableDecl7']]
+19: [['ENDOST']]
+20: [['SimpleExpression'], ['LogicalExpr'], ['AccessExpression'], ['DictionaryAccess']]
+21: [['Term'], ['BinaryExpression']]
+22: [['SimpleExpression', 'BinaryOperatorTerm']]
+23: [['BinaryOperator', 'Term']]
+24: [['Factor'], ['Term1']]
+25: [['Term2'], ['Term3']]
+26: [['LPAREN']]
+27: [['Expression', 'Term4']]
+28: [['RPAREN']]
+29: [['VariableName'], ['Number'], ['FloatNumber'], ['Anytext1'], ['TRUE'], ['FALSE']]
+30: [['Anytext2', 'Anytext3']]
+31: [['QUOTE']]
+32: [[34, 'Anytext4']]
+33: [['QUOTE']]
+34: [[35, 34]]
+35: [['AnyChar'], ['Digit'], ['AnySymbol'], ['space', 'space']]
+263: [['PLUS'], ['MINUS'], ['STAR'], ['SLASH'], ['PERCENT'], ['CARET']]
+36: [['LogicalExpr1'], ['Expression']]
+37: [['Expression', 38]]
+38: [[222], ['OR'], ['NOT']]
+39: [['Digit', 'Number'], ['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
+40: [['FloatNumber1', 'Number']]
+41: [['Number', 'DOT']]
+42: [['Number'], ['FloatNumber'], ['Literal1'], ['TRUE'], ['FALSE']]
+43: [['Liternal2', 'Liternal3']]
+315: [['QUOTE']]
+316: [['AnyText', 'QUOTE']]
+44: [['VariableName', 'AccessOperator']]
+45: [['LNUMBERR'], ['LNUMBERCNUMBERR']]
+46: [['LNUMBERR1', 'LNUMBERR2']]
+47: [['LNUMBERCNUMBERR1', 'LNUMBERCNUMBERR2']]
+48: [['LSQUARE']]
+49: [['Number', 'LNUMBERR3']]
+50: [['RSQUARE']]
+51: [['LN', 'C']]
+52: [['LN1', 'LSQUARE']]
+53: [['LSQUARE']]
+54: [['Number', 'LNUMBERR3']]
+55: [['VariableName', 'DictionaryAccess1']]
+56: [['DictionaryAccess2', 'DictionaryAccess3']]
+57: [['DictionaryAccess4'], ['Key']]
+58: [['RSQUARE']]
+59: [['LSQUARE']]
+204: [['UNDERSCORE'], ['Identifier', 'IdentifierDigits'], ['a'], ['b'], ['c'], ['d'], ['e'], ['f'], ['g'], ['h'], ['i'], ['j'], ['k'], ['l'], ['m'], ['n'], ['o'], ['p'], ['q'], ['r'], ['s'], ['t'], ['u'], ['v'], ['w'], ['x'], ['y'], ['z'], ['A'], ['B'], ['C'], ['D'], ['E'], ['F'], ['G'], ['H'], ['I'], ['J'], ['K'], ['L'], ['M'], ['N'], ['O'], ['P'], ['Q'], ['R'], ['S'], ['T'], ['U'], ['V'], ['W'], ['X'], ['Y'], ['Z']]
+304: [['UNDERSCORE'], ['Identifier', 'IdentifierDigits'], ['a'], ['b'], ['c'], ['d'], ['e'], ['f'], ['g'], ['h'], ['i'], ['j'], ['k'], ['l'], ['m'], ['n'], ['o'], ['p'], ['q'], ['r'], ['s'], ['t'], ['u'], ['v'], ['w'], ['x'], ['y'], ['z'], ['A'], ['B'], ['C'], ['D'], ['E'], ['F'], ['G'], ['H'], ['I'], ['J'], ['K'], ['L'], ['M'], ['N'], ['O'], ['P'], ['Q'], ['R'], ['S'], ['T'], ['U'], ['V'], ['W'], ['X'], ['Y'], ['Z']]
+305: [['Identifier', 'Digit'], ['Letter', 'Identifier']]
+206: [['INTEGER'], ['CHARACTER'], ['FLOATPOINT'], ['TEXTWAVE'], ['FLAG']]
+60: [['FN', 'FunctionDecl1']]
+61: [['FunctionName', 'FunctionDecl2']]
+62: [['LPAREN', 'FunctionDecl3']]
+63: [['Arguments', 'FunctionDecl4']]
+64: [['RPAREN', 'Block']]
+65: [['VariableName']]
+66: [['Argument', 'Argument1']]
+67: [['COMMAArgument', 'ArgumentsRest']]
+68: [['COMMA', 'Argument']]
+69: [['VariableName', 'Argument1']]
+70: [['LPAREN', 'Argument2']]
+71: [['DataType', 'Argument3']]
+72: [['RPAREN']]
+73: [['GivenClause', 'Conditional1']]
+74: [['GivenClause1', 'GivenClause2']]
+75: [['GIVEN', 'GivenClause1']]
+76: [['LPAREN', 'GivenClause2']]
+77: [['Expression', 'Block']]
+78: [['RPAREN', 'Block']]
+79: [['ElseGivenClause1', 'ElseGivenClause2']]
+80: [['LPAREN', 'ElseGivenClause2']]
+81: [['Expression', 'ElseGivenClause3']]
+82: [['RPAREN', 'Block']]
+83: [['OTHERWISE', 'Block']]
+84: [['WhileLoop'], ['IterateLoop'], ['RangeLoop']]
+85: [['WHILE', 'WhileLoop1']]
+86: [['LPAREN', 'WhileLoop2']]
+87: [['Expression', 'WhileLoop3']]
+88: [['RPAREN', 'WhileLoop4']]
+89: [['Block', 'LoopStatements']]
+90: [['ITERATE', 'IterateLoop1']]
+91: [['LPAREN', 'IterateLoop2']]
+92: [['VariableName', 'IterateLoop3']]
+93: [['LPAREN', 'IterateLoop4']]
+94: [['DataType', 'IterateLoop5']]
+95: [['RPAREN', 'IterateLoop6']]
+96: [['EQUALTO', 'IterateLoop7']]
+97: [['Expression', 'IterateLoop8']]
+98: [['ENDOST', 'IterateLoop9']]
+99: [['THROUGH', 'IterateLoop10']]
+100: [['VariableName', 'IterateLoop11']]
+101: [['ENDOST', 'IterateLoop12']]
+102: [['RPAREN', 'Block']]
+103: [['ITERATE', 'RangeLoop1']]
+104: [['LPAREN', 'RangeLoop2']]
+105: [['VariableName', 'RangeLoop3']]
+106: [['LPAREN', 'RangeLoop4']]
+107: [['DataType', 'RangeLoop5']]
+108: [['RPAREN', 'RangeLoop6']]
+109: [['EQUALTO', 'RangeLoop7']]
+110: [['Expression', 'RangeLoop8']]
+111: [['DOTDOTDOT', 'RangeLoop9']]
+112: [['THROUGH', 'RangeLoop10']]
+113: [['RANGE', 'RangeLoop11']]
+114: [['LPAREN', 'RangeLoop12']]
+115: [['Expression', 'RangeLoop13']]
+116: [['DOTDOTDOT', 'RangeLoop14']]
+117: [['Expression', 'RangeLoop15']]
+118: [['COMMA', 'RangeLoop16']]
+119: [['Expression', 'RangeLoop17']]
+120: [['DOTDOTDOT', 'RangeLoop18']]
+121: [['RPAREN', 'Block']]
+122: [['LoopStatement', 'LoopStatements']]
+123: [['Statement'], ['LoopInterrupt'], ['LoopResume']]
+124: [['INTERRUPT', 'ENDOST']]
+125: [['RESUME', 'ENDOST']]
+126: [['StriveBlock', 'CaptureBlock']]
+127: [['STRIVE', 'Block']]
+128: [['CAPTURE', 'CaptureBlockOption']]
+129: [['CaptureWithParentheses'], ['CaptureWithoutParentheses']]
+130: [['LPAREN', 'VariableNameBlock']]
+131: [['CAPTURE', 'Block']]
+132: [['VariableName', 'RPARENBlock']]
+133: [['RPAREN', 'Block']]
+134: [['VariableName', 'UnaryOperation1']]
+135: [['INCREMENT', 'ENDOST'], ['DECREMENT', 'UnaryOperationEnd']]
+136: [['ENDOST']]
+137: [['VariableName', 'Assignment1']]
+138: [['EQUALTO', 'Assignment2'], ['AssignmentOperator', 'Assignment2']]
+139: [['Expression', 'ENDOST']]
+140: [['BinaryOperator'], ['PLUSEQUAL'], ['MINUSEQUAL'], ['TIMESEQUAL'], ['DIVIDEEQUAL'], ['MODEQUAL']]
+141: [['VariableName', 'ArrayDecl1']]
+142: [['LPAREN', 'ArrayDecl2']]
+143: [['DataType', 'ArrayDecl3']]
+144: [['COMMA', 'ArrayDecl4']]
+145: [['Number', 'ArrayDecl5']]
+146: [['RPAREN', 'ArrayDecl6']]
+147: [['EQUALTO', 'ArrayDecl7']]
+148: [['LCURL', 'ArrayDecl8']]
+149: [['Elements', 'ArrayDecl9']]
+150: [['RCURL', 'ENDOST']]
+151: [['VariableName', 'ListDecl1']]
+152: [['EQUALTO', 'ListDecl2']]
+153: [['LSQUARE', 'ListDecl3']]
+154: [['Elements', 'ListDecl4']]
+155: [['RSQUARE', 'ENDOST']]
+156: [['VariableName', 'TupleDecl1']]
+157: [['EQUALTO', 'TupleDecl2']]
+158: [['LPAREN', 'TupleDecl3']]
+159: [['Elements', 'TupleDecl4']]
+160: [['RPAREN', 'ENDOST']]
+161: [['VariableName', 'DictionaryDecl1']]
+162: [['EQUALTO', 'DictionaryDecl2']]
+163: [['LCURL', 'DictionaryDecl3']]
+164: [['KeyValues', 'DictionaryDecl4']]
+165: [['RCURL', 'ENDOST']]
+166: [['Element', 'ElementsRest']]
+167: [['COMMAElement', 'ElementsRest']]
+168: [['COMMA', 'Element']]
+169: [['KeyValue', 'KeyValuesRest']]
+170: [['COMMAKeyValue', 'KeyValuesRest']]
+171: [['COMMA', 'KeyValue']]
+172: [['Expression']]
+173: [['Expression', 'KeyValue1']]
+174: [['COLON', 'Expression']]
+175: [['ArrayDim'], ['ArrayExchange'], ['ArrayGetIdx'], ['ArraySort'], ['ArrayTail'], ['ArrayHead'], ['ListAdd'], ['ListRemove'], ['DictionarySet']]
+176: [['ArrayDim'], ['ArrayExchange'], ['ArrayGetIdx'], ['ArraySort'], ['ArrayTail'], ['ArrayHead'], ['ListAdd'], ['ListRemove']]
+177: [['ArrayDim'], ['ArrayExchange'], ['ArrayGetIdx'], ['ArraySort'], ['ArrayTail'], ['ArrayHead'], ['ListAdd'], ['ListRemove']]
+178: [['DictionarySet']]
+179: [['VariableName', 'ArrayDim1']]
+266: [['DOT', 'ArrayDim2']]
+267: [['DIM', 'ArrayDim3']]
+268: [['LPAREN', 'ArrayDim4']]
+269: [['RPAREN', 'ENDOST']]
+180: [['VariableName', 'ArrayExchange1']]
+270: [['DOT', 'ArrayExchange2']]
+271: [['EXCHANGE', 'ArrayExchange3']]
+272: [['LPAREN', 'ArrayExchange4']]
+273: [['Number', 'ArrayExchange5']]
+274: [['COMMA', 'ArrayExchange6']]
+275: [['RPAREN', 'ENDOST']]
+181: [['VariableName', 'ArrayGetIdx1']]
+276: [['DOT', 'ArrayGetIdx2']]
+277: [['GETIDX', 'ArrayGetIdx3']]
+278: [['LPAREN', 'ArrayGetIdx4']]
+279: [['Element', 'RPARENENDOST']]
+182: [['VariableName', 'ArraySort1']]
+280: [['DOT', 'ArraySort2']]
+281: [['SORT', 'ArraySort3']]
+282: [['LPAREN', 'ArraySort4']]
+283: [['SortOrder', 'RPARENENDOST']]
+183: [['VariableName', 'ArrayTail1']]
+284: [['DOT', 'ArrayTail2']]
+285: [['TAIL', 'LPARENRPARENENDOST']]
+184: [['VariableName', 'ArrayHead1']]
+286: [['DOT', 'ArrayHead2']]
+287: [['HEAD', 'LPARENRPARENENDOST']]
+185: [['VariableName', 'ListAdd1']]
+288: [['DOT', 'ListAdd2']]
+289: [['ADD', 'ListAdd3']]
+290: [['LPAREN', 'ListAdd4']]
+291: [['Element', 'RPARENENDOST']]
+186: [['VariableName', 'ListRemove1']]
+292: [['DOT', 'ListRemove2']]
+293: [['SET', 'ListRemove3']]
+294: [['LPAREN', 'ListRemove4']]
+295: [['Key', 'COMMAValue']]
+187: [['VariableName', 'ListRemove1']]
+300: [['COMMA', 'ValueRPARENENDOST']]
+319: [['Value', 'RPARENENDOST']]
+301: [['RPAREN', 'ENDOST']]
+189: [['Expression']]
+190: [['Expression']]
+191: [['PENDOWN', 'PrintFunction1']]
+192: [['LPAREN', 'PrintFunction2']]
+193: [['FunctionArgs', 'PrintFunction3']]
+194: [['RPAREN', 'ENDOST']]
+195: [['PENUP', 'InputFunction1']]
+196: [['LPAREN', 'InputFunction2']]
+197: [['FunctionArgs', 'InputFunction3']]
+198: [['RPAREN', 'ENDOST']]
+199: [['FunctionArgs'], [202]]
+200: [['COMMAFunctionArg', 'FunctionArgsRest']]
+201: [['COMMA', 'FunctionArgs']]
+203: [['LCURL', 'Block1']]
+259: [['Letter'], ['Digit'], ['AnySymbol'], ['space', 'space'], ['!'], ['@'], ['#'], ['$'], ['%'], ['^'], ['&'], ['*'], ['('], [')'], ['-'], ['_'], ['+'], ['='], ['{'], ['}'], ['['], [']'], ['|'], ['\\'], [':'], [';'], ["'"], ['"'], [','], ['<'], ['>'], ['.'], ['?'], ['/'], ['`'], ['~'], ['a'], ['b'], ['c'], ['d'], ['e'], ['f'], ['g'], ['h'], ['i'], ['j'], ['k'], ['l'], ['m'], ['n'], ['o'], ['p'], ['q'], ['r'], ['s'], ['t'], ['u'], ['v'], ['w'], ['x'], ['y'], ['z'], ['A'], ['B'], ['C'], ['D'], ['E'], ['F'], ['G'], ['H'], ['I'], ['J'], ['K'], ['L'], ['M'], ['N'], ['O'], ['P'], ['Q'], ['R'], ['S'], ['T'], ['U'], ['V'], ['W'], ['X'], ['Y'], ['Z'], ['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
+260: [['"']]
+261: [['space', 'space'], ['!'], ['@'], ['#'], ['$'], ['%'], ['^'], ['&'], ['*'], ['('], [')'], ['-'], ['_'], ['+'], ['='], ['{'], ['}'], ['['], [']'], ['|'], ['\\'], [':'], [';'], ["'"], ['"'], [','], ['<'], ['>'], ['.'], ['?'], ['/'], ['`'], ['~'], ['a'], ['b'], ['c'], ['d'], ['e'], ['f'], ['g'], ['h'], ['i'], ['j'], ['k'], ['l'], ['m'], ['n'], ['o'], ['p'], ['q'], ['r'], ['s'], ['t'], ['u'], ['v'], ['w'], ['x'], ['y'], ['z'], ['A'], ['B'], ['C'], ['D'], ['E'], ['F'], ['G'], ['H'], ['I'], ['J'], ['K'], ['L'], ['M'], ['N'], ['O'], ['P'], ['Q'], ['R'], ['S'], ['T'], ['U'], ['V'], ['W'], ['X'], ['Y'], ['Z'], ['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
+188: [['Asc'], ['Dsc']]
+253: [['p', 'e', 'n', 'd', 'o', 'w', 'n']]
+254: [['p', 'e', 'n', 'u', 'p']]
+205: [['(']]
+207: [[')']]
+233: [[',']]
+209: [[';']]
+257: [['a'], ['b'], ['c'], ['d'], ['e'], ['f'], ['g'], ['h'], ['i'], ['j'], ['k'], ['l'], ['m'], ['n'], ['o'], ['p'], ['q'], ['r'], ['s'], ['t'], ['u'], ['v'], ['w'], ['x'], ['y'], ['z'], ['A'], ['B'], ['C'], ['D'], ['E'], ['F'], ['G'], ['H'], ['I'], ['J'], ['K'], ['L'], ['M'], ['N'], ['O'], ['P'], ['Q'], ['R'], ['S'], ['T'], ['U'], ['V'], ['W'], ['X'], ['Y'], ['Z']]
+258: [['0'], ['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9']]
+255: [['_']]
+202: [['ε']]
+208: [['=']]
+210: [['i', 'm', 'm', 'u', 't', 'e']]
+211: [['i', 'n', 't', 'e', 'g', 'e', 'r']]
+212: [['c', 'h', 'a', 'r', 'a', 'c', 't', 'e', 'r']]
+213: [['f', 'l', 'o', 'a', 't', 'p', 'o', 'i', 'n', 't']]
+214: [['t', 'e', 'x', 't', 'w', 'a', 'v', 'e']]
+215: [['f', 'l', 'a', 'g']]
+216: [['+']]
+217: [['-']]
+218: [['*']]
+219: [['/']]
+220: [['%']]
+221: [['^']]
+222: [['&', '&']]
+223: [['$', '$']]
+224: [['!']]
+225: [['T', 'r', 'u', 'e']]
+226: [['F', 'a', 'l', 's', 'e']]
+227: [['"']]
+228: [['[']]
+229: [[']']]
+230: [[':']]
+231: [['.']]
+232: [['f', 'n']]
+234: [['w', 'h', 'i', 'l', 'e']]
+235: [['i', 't', 'e', 'r', 'a', 't', 'e']]
+236: [['t', 'h', 'r', 'o', 'u', 'g', 'h']]
+237: [['r', 'a', 'n', 'g', 'e']]
+238: [['.', '.', '.']]
+239: [['i', 'n', 't', 'e', 'r', 'r', 'u', 'p', 't']]
+240: [['r', 'e', 's', 'u', 'm', 'e']]
+241: [['s', 't', 'r', 'i', 'v', 'e']]
+242: [['c', 'a', 'p', 't', 'u', 'r', 'e']]
+243: [['+', '+']]
+244: [['-', '-']]
+245: [['+', '=']]
+246: [['-', '=']]
+247: [['*', '=']]
+248: [['/', '=']]
+249: [['%', '=']]
+250: [['G', 'i', 'v', 'e', 'n']]
+251: [['E', 'l', 's', 'e', 'G', 'i', 'v', 'e', 'n']]
+252: [['O', 't', 'h', 'e', 'r', 'w', 'i', 's', 'e']]
+256: [['ε']]
+262: [['AnyChar', 'AnyText']]
+264: [[321], [322], [323]]
+
+

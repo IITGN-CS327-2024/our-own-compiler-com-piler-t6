@@ -1,6 +1,6 @@
 # Define maximum sizes
 NMax = 400  # Maximum input length
-RMax = 40  # Maximum number of non-terminals
+RMax = 400  # Maximum number of non-terminals
 
 # Initialize dynamic programming table
 dp = [[[False for _ in range(RMax)] for _ in range(NMax)] for _ in range(NMax)]
@@ -9,24 +9,40 @@ dp = [[[False for _ in range(RMax)] for _ in range(NMax)] for _ in range(NMax)]
 mp = {
   'S': 1, 
   'VD_Content': 2, 
-  'X1': 3, 'X2': 4, 
-  'X3': 5, 'X4': 6, 
-  'X5': 7, 'X6': 8, 
-  'X7': 9, 'X8': 10, 
-  'X9': 11, 'DataType': 12, 
+  'X1': 3, 
+  'X2': 4, 
+  'X3': 5, 
+  'X4': 6, 
+  'X5': 7, 
+  'X6': 8, 
+  'X7': 9, 
+  'X8': 10, 
+  'X9': 11, 
+  'DataType': 12, 
   'Expression': 13, 
-  'GivenBlock': 14, 'Y1': 15,
-  'OtherwiseBlock': 16, 'ElseGivenBlock': 17,
-  'GivenCondition': 18, 'Block': 19,
+  'GivenBlock': 14, 
+  'Y1': 15,
+  'OtherwiseBlock': 16, 
+  'ElseGivenBlock': 17,
+  'GivenCondition': 18, 
+  'Block': 19,
   'ElseGivenCondition': 20, 
-  'Y3': 21, 'Y2': 22, 
-  'Y4': 23, 'Y5': 24, 
-  'COND': 25, 'Y6': 26, 
-  'Y7': 27, 'Y8': 28, 
-  'Y9': 29, 'Operators': 30,
-  'Y10': 31, 'Z1': 32, 
-  'Z2': 33, 'Z3': 34, 
-  'Z4': 35, 'Y11': 36
+  'Y3': 21, 
+  'Y2': 22, 
+  'Y4': 23, 
+  'Y5': 24, 
+  'COND': 25, 
+  'Y6': 26, 
+  'Y7': 27, 
+  'Y8': 28, 
+  'Y9': 29, 
+  'Operators': 30,
+  'Y10': 31, 
+  'Z1': 32, 
+  'Z2': 33, 
+  'Z3': 34, 
+  'Z4': 35, 
+  'Y11': 36
 }
 
 # CFG rules
