@@ -1,7 +1,7 @@
 import argparse
 import os
 import sys
-from lark import Lark
+from lark import Lark, Transformer
 
 root_dir = os.path.join(os.path.dirname(__file__), '..')
 sys.path.insert(0, root_dir)
@@ -48,3 +48,104 @@ for test_case_file in test_case_files:
         except Exception as e:
             print(f"Error parsing Test Case {i}: {e}")
         print("\n" + "-"*50 + "\n")
+
+class ASTTransformer(Transformer):
+    # Program and statements handling
+    def start(self, items):
+        return {"type": "program", "body": items}
+
+    def statements(self, items):
+        return items
+
+    # Function handling
+    def functiondecl(self, items):
+        _, name, _, args, _, return_type, body = items
+        return {"type": "function_decl", "name": name, "args": args, "return_type": return_type, "body": body}
+
+    def arguments(self, items):
+        return items
+
+    def argument(self, items):
+        name, _, data_type = items
+        return {"name": name, "data_type": data_type}
+
+    # Variable and type declarations
+    def variabledecl(self, items):
+        name, _, data_type, _, value = items
+        return {"type": "variable_decl", "name": name, "data_type": data_type, "value": value}
+
+    def immutablevariabledecl(self, items):
+        _, name, _, data_type, _, value = items
+        return {"type": "immutable_variable_decl", "name": name, "data_type": data_type, "value": value}
+
+    # Loops
+    def whileloop(self, items):
+        _, condition, body = items
+        return {"type": "while_loop", "condition": condition, "body": body}
+
+    def iterateloop(self, items):
+        _, _, variable, _, data_type, _, start, _, through, _, end, _, step, _, body = items
+        return {"type": "iterate_loop", "variable": {"name": variable, "data_type": data_type}, "start": start, "through": through, "end": end, "step": step, "body": body}
+
+    def rangeloop(self, items):
+        _, _, variable, _, data_type, _, start, _, _, range_start, _, range_end, _, step, _, body = items
+        return {"type": "range_loop", "variable": {"name": variable, "data_type": data_type}, "start": start, "range_start": range_start, "range_end": range_end, "step": step, "body": body}
+
+    # Conditionals
+    def conditional(self, items):
+        clauses = []
+        for item in items:
+            if item['type'] in ['given_clause', 'elsegiven_clause', 'otherwise_clause']:
+                clauses.append(item)
+        return {"type": "conditional", "clauses": clauses}
+
+    def givenclause(self, items):
+        _, condition, body = items
+        return {"type": "given_clause", "condition": condition, "body": body}
+
+    def elsegivenclause(self, items):
+        _, condition, body = items
+        return {"type": "elsegiven_clause", "condition": condition, "body": body}
+
+    def otherwiseclause(self, items):
+        _, body = items
+        return {"type": "otherwise_clause", "body": body}
+
+    # Expressions
+    def arithmeticexpr(self, items):
+        left, operator, right = items
+        return {"type": "arithmetic_expr", "operator": operator, "left": left, "right": right}
+
+    def logicalexpr(self, items):
+        left, operator, right = items
+        return {"type": "logical_expr", "operator": operator, "left": left, "right": right}
+
+    def comparisonexpr(self, items):
+        left, operator, right = items
+        return {"type": "comparison_expr", "operator": operator, "left": left, "right": right}
+
+    # Basic types handling
+    def number(self, items):
+        return int(items[0])
+
+    def floatnumber(self, items):
+        return float(items[0])
+
+    def string(self, items):
+        # Removing quotation marks
+        return str(items[0][1:-1])
+
+    # Method calls and other specific nodes
+    # Implement methods for method_call, array_methods, list_methods, etc., as per your grammar
+
+    # Add methods for any other nodes you need to handle...
+
+# Initialize the parser with the corrected grammar and the transformer
+parser = Lark(grammar, start='start', parser='lalr', transformer=ASTTransformer())
+
+# Example program text for parsing
+program_text = """x = 5 + 3 * 2;"""
+
+# Parse and transform the program text into an AST
+ast = parser.parse(program_text)
+print(ast)

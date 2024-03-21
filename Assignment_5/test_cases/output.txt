@@ -1,0 +1,894 @@
+Processing file: Assignment_5/test_cases\testcase.cmm
+Test Case 1: x(integer) = 5;
+Tokens: ['x', '(', 'integer', ')', '=', '5', ';']
+Parse Tree:
+program
+  variabledecl
+    x
+    (
+    datatype    integer
+    )
+    =
+    number      5
+    ;
+
+
+--------------------------------------------------
+
+Test Case 2: immute y(textwave) = "Hello World";
+Tokens: ['immute', 'y', '(', 'textwave', ')', '=', '"Hello World"', ';']
+Parse Tree:
+program
+  immutablevariabledecl
+    immute
+    y
+    (
+    datatype    textwave
+    )
+    =
+    literal     "Hello World"
+    ;
+
+
+--------------------------------------------------
+
+Test Case 3: fn add(a(integer), b(integer)) -> integer { exitwith a + b; } add(5, 3);
+Tokens: ['fn', 'add', '(', 'a', '(', 'integer', ')', ',', 'b', '(', 'integer', ')', ')', '->', 'integer', '{', 'exitwith', 'a', '+', 'b', ';', '}', 'add', '(', '5', ',', '3', ')', ';']
+Parse Tree:
+program
+  statements
+    functiondecl
+      fn
+      functionname      add
+      (
+      arguments
+        argument
+          a
+          (
+          datatype      integer
+          )
+        ,
+        argument
+          b
+          (
+          datatype      integer
+          )
+      )
+      ->
+      datatype  integer
+      block
+        {
+        return_statement
+          exitwith
+          arithmeticexpr
+            a
+            binaryoperator      +
+            b
+          ;
+        }
+    functioncall1
+      add
+      (
+      functionargs
+        functionarg
+          number        5
+        ,
+        functionarg
+          number        3
+      )
+      ;
+
+
+--------------------------------------------------
+
+Test Case 4: while (x > 0) { x = x - 1; }
+Tokens: ['while', '(', 'x', '>', '0', ')', '{', 'x', '=', 'x', '-', '1', ';', '}']
+Parse Tree:
+program
+  loop
+    whileloop
+      while
+      (
+      comparisonexpr
+        x
+        >
+        number  0
+      )
+      block
+        {
+        assignment
+          x
+          =
+          arithmeticexpr
+            x
+            binaryoperator      -
+            number      1
+          ;
+        }
+
+
+--------------------------------------------------
+
+Test Case 5: Given (x == 5) { pendown("x is 5"); } ElseGiven (x > 5) { pendown("x is greater than 5"); } Otherwise { pendown("x is less than 5"); }
+Tokens: ['Given', '(', 'x', '==', '5', ')', '{', 'pendown', '(', '"x is 5"', ')', ';', '}', 'ElseGiven', '(', 'x', '>', '5', ')', '{', 'pendown', '(', '"x is greater than 5"', ')', ';', '}', 'Otherwise', '{', 'pendown', '(', '"x is less than 5"', ')', ';', '}']
+Parse Tree:
+program
+  conditional
+    givenclause
+      Given
+      (
+      comparisonexpr
+        x
+        ==
+        number  5
+      )
+      block
+        {
+        printfunction
+          pendown
+          (
+          "x is 5"
+          )
+          ;
+        }
+    elsegivenclause
+      ElseGiven
+      (
+      comparisonexpr
+        x
+        >
+        number  5
+      )
+      block
+        {
+        printfunction
+          pendown
+          (
+          "x is greater than 5"
+          )
+          ;
+        }
+    otherwiseclause
+      Otherwise
+      block
+        {
+        printfunction
+          pendown
+          (
+          "x is less than 5"
+          )
+          ;
+        }
+
+
+--------------------------------------------------
+
+Test Case 6: strive() { throwexception("Error"); } capture() { pendown("Caught an exception"); }
+Tokens: ['strive', '()', '{', 'throwexception', '(', '"Error"', ')', ';', '}', 'capture', '()', '{', 'pendown', '(', '"Caught an exception"', ')', ';', '}']
+Parse Tree:
+program
+  exceptionhandling
+    striveblock
+      strive
+      (
+      )
+      block
+        {
+        throwexception
+          throwexception
+          (
+          "Error"
+          )
+          ;
+        }
+    captureblock
+      capture
+      (
+      None
+      )
+      block
+        {
+        printfunction
+          pendown
+          (
+          "Caught an exception"
+          )
+          ;
+        }
+
+
+--------------------------------------------------
+
+Test Case 7: x = 10;
+Tokens: ['x', '=', '10', ';']
+Parse Tree:
+program
+  assignment
+    x
+    =
+    number      10
+    ;
+
+
+--------------------------------------------------
+
+Test Case 8: x++; y--;
+Tokens: ['x', '++', ';', 'y', '--', ';']
+Parse Tree:
+program
+  statements
+    unaryoperation
+      x
+      ++
+      ;
+    unaryoperation
+      y
+      --
+      ;
+
+
+--------------------------------------------------
+
+Test Case 9: pendown("This is a test");
+Tokens: ['pendown', '(', '"This is a test"', ')', ';']
+Parse Tree:
+program
+  printfunction
+    pendown
+    (
+    "This is a test"
+    )
+    ;
+
+
+--------------------------------------------------
+
+Test Case 10: arr(integer, 5) = {1, 2, 3, 4, 5};
+Tokens: ['arr', '(', 'integer', ',', '5', ')', '=', '{', '1', ',', '2', ',', '3', ',', '4', ',', '5', '}', ';']
+Parse Tree:
+program
+  arraydecl
+    arr
+    (
+    datatype    integer
+    ,
+    number      5
+    )
+    =
+    {
+    elements
+      element
+        number  1
+      ,
+      element
+        number  2
+      ,
+      element
+        number  3
+      ,
+      element
+        number  4
+      ,
+      element
+        number  5
+    }
+    ;
+
+
+--------------------------------------------------
+
+Test Case 11: myList = ["apple", "banana", "cherry"];
+Tokens: ['myList', '=', '[', '"apple"', ',', '"banana"', ',', '"cherry"', ']', ';']
+Parse Tree:
+program
+  listdecl
+    myList
+    =
+    [
+    elements
+      element   "apple"
+      ,
+      element   "banana"
+      ,
+      element   "cherry"
+    ]
+    ;
+
+
+--------------------------------------------------
+
+Test Case 12: myTuple = ("apple", "banana", "cherry");
+Tokens: ['myTuple', '=', '(', '"apple"', ',', '"banana"', ',', '"cherry"', ')', ';']
+Parse Tree:
+program
+  tupledecl
+    myTuple
+    =
+    (
+    elements
+      element   "apple"
+      ,
+      element   "banana"
+      ,
+      element   "cherry"
+    )
+    ;
+
+
+--------------------------------------------------
+
+Test Case 13: myDict = {"name": "John", "age": 30};
+Tokens: ['myDict', '=', '{', '"name"', ':', '"John"', ',', '"age"', ':', '30', '}', ';']
+Parse Tree:
+program
+  dictionarydecl
+    myDict
+    =
+    {
+    key_values
+      key_value
+        key     "name"
+        :
+        value   "John"
+      ,
+      key_value
+        key     "age"
+        :
+        value
+          number        30
+    }
+    ;
+
+
+--------------------------------------------------
+
+Test Case 14: i(integer) = arr.array_dim();
+Tokens: ['i', '(', 'integer', ')', '=', 'arr', '.', 'array_dim', '()', ';']
+Parse Tree:
+program
+  variabledecl
+    i
+    (
+    datatype    integer
+    )
+    =
+    method_call
+      array_methods
+        array_dim
+          arr
+          .
+          array_dim
+          ()
+    ;
+
+
+--------------------------------------------------
+
+Test Case 15: i(integer) = arr.array_getidx(2);
+Tokens: ['i', '(', 'integer', ')', '=', 'arr', '.', 'array_getidx', '(', '2', ')', ';']
+Error parsing Test Case 15: Unexpected token Token('VARIABLENAME', 'array_getidx') at line 1, column 18.
+Expected one of:
+        * DICTSET
+        * LISTINDEX
+        * LISTTAIL
+        * ARRAYDIM
+        * ARRAYHEAD
+        * ARRAYTAIL
+        * LISTDIM
+        * ARRAYINDEX
+        * TUPLEHEAD
+        * TUPLEINDEX
+        * TUPLEDIM
+        * LISTHEAD
+        * TUPLETAIL
+Previous tokens: [Token('DOT', '.')]
+
+
+--------------------------------------------------
+
+Test Case 16: i(integer) = myList.list_dim();
+Tokens: ['i', '(', 'integer', ')', '=', 'myList', '.', 'list_dim', '()', ';']
+Parse Tree:
+program
+  variabledecl
+    i
+    (
+    datatype    integer
+    )
+    =
+    method_call
+      list_methods
+        list_dim
+          myList
+          .
+          list_dim
+          ()
+    ;
+
+
+--------------------------------------------------
+
+Test Case 17: i.list_add("date");
+Tokens: ['i', '.', 'list_add', '(', '"date"', ')', ';']
+Parse Tree:
+program
+  methods_type_2
+    list_add
+      i
+      .
+      list_add
+      (
+      element   "date"
+      )
+      ;
+
+
+--------------------------------------------------
+
+Test Case 18: i(integer) = myTuple.tuple_dim();
+Tokens: ['i', '(', 'integer', ')', '=', 'myTuple', '.', 'tuple_dim', '()', ';']
+Parse Tree:
+program
+  variabledecl
+    i
+    (
+    datatype    integer
+    )
+    =
+    method_call
+      tuple_methods
+        tuple_dim
+          myTuple
+          .
+          tuple_dim
+          ()
+    ;
+
+
+--------------------------------------------------
+
+Test Case 19: myDict.dictionary_set("name", "Jane");
+Tokens: ['myDict', '.', 'dictionary_set', '(', '"name"', ',', '"Jane"', ')', ';']
+Error parsing Test Case 19: Unexpected token Token('ENDOST', ';') at line 1, column 38.
+Expected one of:
+        * FN
+        * $END
+        * IMMUTABLE
+        * STRIVE
+        * GIVEN
+        * WHILE
+        * ITERATE
+        * THROWEXCEPTION
+        * INTERRUPT
+        * EXITWITH
+        * PENDOWN
+        * VARIABLENAME
+        * RESUME
+        * LCURL
+
+
+--------------------------------------------------
+
+Test Case 20: fn getFive() -> integer { return 5; }
+Tokens: ['fn', 'getFive', '()', '->', 'integer', '{', 'return', '5', ';', '}']
+Error parsing Test Case 20: Unexpected token Token('__ANON_0', '5') at line 1, column 34.
+Expected one of:
+        * DIVIDEEQUAL
+        * EQUALTO
+        * MODEQUAL
+        * INCREMENT
+        * DECREMENT
+        * LPAREN
+        * TIMESEQUAL
+        * MINUSEQUAL
+        * PLUSEQUAL
+        * DOT
+Previous tokens: [Token('VARIABLENAME', 'return')]
+
+
+--------------------------------------------------
+
+Test Case 21: x = 5 + 3 * 2;
+Tokens: ['x', '=', '5', '+', '3', '*', '2', ';']
+Parse Tree:
+program
+  assignment
+    x
+    =
+    arithmeticexpr
+      number    5
+      binaryoperator    +
+      arithmeticexpr
+        number  3
+        binaryoperator  *
+        number  2
+    ;
+
+
+--------------------------------------------------
+
+Test Case 22: Given(x > 5 && y < 10) { pendown("x is greater than 5 and y is less than 10"); }
+Tokens: ['Given', '(', 'x', '>', '5', '&&', 'y', '<', '10', ')', '{', 'pendown', '(', '"x is greater than 5 and y is less than 10"', ')', ';', '}']
+Parse Tree:
+program
+  conditional
+    givenclause
+      Given
+      (
+      comparisonexpr
+        x
+        >
+        logicalexpr
+          number        5
+          logicaloperator       &&
+          comparisonexpr
+            y
+            <
+            number      10
+      )
+      block
+        {
+        printfunction
+          pendown
+          (
+          "x is greater than 5 and y is less than 10"
+          )
+          ;
+        }
+    elsegivenclause
+    otherwiseclause
+
+
+--------------------------------------------------
+
+Test Case 23: x = myList[0];
+Tokens: ['x', '=', 'myList', '[', '0', ']', ';']
+Parse Tree:
+program
+  assignment
+    x
+    =
+    accessexpression
+      myList
+      accessoperator
+        [
+        number  0
+        ]
+    ;
+
+
+--------------------------------------------------
+
+Test Case 24: Given (!flag) { pendown("flag is false"); }
+Tokens: ['Given', '(', '!', 'flag', ')', '{', 'pendown', '(', '"flag is false"', ')', ';', '}']
+Parse Tree:
+program
+  conditional
+    givenclause
+      Given
+      (
+      negation
+        !
+        flag
+      )
+      block
+        {
+        printfunction
+          pendown
+          (
+          "flag is false"
+          )
+          ;
+        }
+    elsegivenclause
+    otherwiseclause
+
+
+--------------------------------------------------
+
+Test Case 25: userName = penup("Enter your name: ");
+Tokens: ['userName', '=', 'penup', '(', '"Enter your name: "', ')', ';']
+Parse Tree:
+program
+  assignment
+    userName
+    =
+    inputfunction
+      penup
+      (
+      "Enter your name: "
+      )
+    ;
+
+
+--------------------------------------------------
+
+Test Case 26: fn calculate(index(integer)) -> integer { Given (index <= 1) { exitwith index; } Otherwise { exitwith calculate(index - 1) + calculate(index - 2); } } calculate(5);       
+Tokens: ['fn', 'calculate', '(', 'index', '(', 'integer', ')', ')', '->', 'integer', '{', 'Given', '(', 'index', '<=', '1', ')', '{', 'exitwith', 'index', ';', '}', 'Otherwise', '{', 'exitwith', 'calculate', '(', 'index', '-', '1', ')', '+', 'calculate', '(', 'index', '-', '2', ')', ';', '}', '}', 'calculate', '(', '5', ')', ';']
+Parse Tree:
+program
+  statements
+    functiondecl
+      fn
+      functionname      calculate
+      (
+      argument
+        index
+        (
+        datatype        integer
+        )
+      )
+      ->
+      datatype  integer
+      block
+        {
+        conditional
+          givenclause
+            Given
+            (
+            comparisonexpr
+              index
+              <=
+              number    1
+            )
+            block
+              {
+              return_statement
+                exitwith
+                index
+                ;
+              }
+          elsegivenclause
+          otherwiseclause
+            Otherwise
+            block
+              {
+              return_statement
+                exitwith
+                arithmeticexpr
+                  functioncall2
+                    calculate
+                    (
+                    functionarg
+                      arithmeticexpr
+                        index
+                        binaryoperator  -
+                        number  1
+                    )
+                  binaryoperator        +
+                  functioncall2
+                    calculate
+                    (
+                    functionarg
+                      arithmeticexpr
+                        index
+                        binaryoperator  -
+                        number  2
+                    )
+                ;
+              }
+        }
+    functioncall1
+      calculate
+      (
+      functionarg
+        number  5
+      )
+      ;
+
+
+--------------------------------------------------
+
+Test Case 27: iterate (i (integer) = 0; through range(0...10, 1);) { Given (i == 5) { interrupt; } pendown(i); }
+Tokens: ['iterate', '(', 'i', '(', 'integer', ')', '=', '0', ';', 'through', 'range', '(', '0', '...', '10', ',', '1', ')', ';', ')', '{', 'Given', '(', 'i', '==', '5', ')', '{', 'interrupt', ';', '}', 'pendown', '(', 'i', ')', ';', '}']
+Parse Tree:
+program
+  loop
+    rangeloop
+      iterate
+      (
+      i
+      (
+      datatype  integer
+      )
+      =
+      number    0
+      ;
+      through
+      range
+      (
+      number    0
+      ...
+      number    10
+      ,
+      number    1
+      )
+      ;
+      )
+      block
+        {
+        statements
+          conditional
+            givenclause
+              Given
+              (
+              comparisonexpr
+                i
+                ==
+                number  5
+              )
+              block
+                {
+                loopinterrupt
+                  interrupt
+                  ;
+                }
+            elsegivenclause
+            otherwiseclause
+          printfunction
+            pendown
+            (
+            i
+            )
+            ;
+        }
+
+
+--------------------------------------------------
+
+Test Case 28: iterate (i (integer) = 0; through listnamedluadhgkjdfjvbdfoivhfobha;) { Given (i == 5) { resume; } pendown("Skipping 5"); }
+Tokens: ['iterate', '(', 'i', '(', 'integer', ')', '=', '0', ';', 'through', 'listnamedluadhgkjdfjvbdfoivhfobha', ';', ')', '{', 'Given', '(', 'i', '==', '5', ')', '{', 'resume', ';', '}', 'pendown', '(', '"Skipping 5"', ')', ';', '}']
+Parse Tree:
+program
+  loop
+    iterateloop
+      iterate
+      (
+      i
+      (
+      datatype  integer
+      )
+      =
+      number    0
+      ;
+      through
+      listnamedluadhgkjdfjvbdfoivhfobha
+      ;
+      )
+      block
+        {
+        statements
+          conditional
+            givenclause
+              Given
+              (
+              comparisonexpr
+                i
+                ==
+                number  5
+              )
+              block
+                {
+                loopresume
+                  resume
+                  ;
+                }
+            elsegivenclause
+            otherwiseclause
+          printfunction
+            pendown
+            (
+            "Skipping 5"
+            )
+            ;
+        }
+
+
+--------------------------------------------------
+
+Test Case 29: result = (a + b) / (c - d) * e;
+Tokens: ['result', '=', '(', 'a', '+', 'b', ')', '/', '(', 'c', '-', 'd', ')', '*', 'e', ';']
+Parse Tree:
+program
+  assignment
+    result
+    =
+    arithmeticexpr
+      term
+        (
+        arithmeticexpr
+          a
+          binaryoperator        +
+          b
+        )
+      binaryoperator    /
+      arithmeticexpr
+        term
+          (
+          arithmeticexpr
+            c
+            binaryoperator      -
+            d
+          )
+        binaryoperator  *
+        e
+    ;
+
+
+--------------------------------------------------
+
+Test Case 30: fn mixTypes(number(integer), text(textwave)) -> integer { pendown("Number: " + number + ", Text: " + text); }
+Tokens: ['fn', 'mixTypes', '(', 'number', '(', 'integer', ')', ',', 'text', '(', 'textwave', ')', ')', '->', 'integer', '{', 'pendown', '(', '"Number: "', '+', 'number', '+', '", Text: "', '+', 'text', ')', ';', '}']
+Parse Tree:
+program
+  functiondecl
+    fn
+    functionname        mixTypes
+    (
+    arguments
+      argument
+        number
+        (
+        datatype        integer
+        )
+      ,
+      argument
+        text
+        (
+        datatype        textwave
+        )
+    )
+    ->
+    datatype    integer
+    block
+      {
+      printfunction
+        pendown
+        (
+        arithmeticexpr
+          "Number: "
+          binaryoperator        +
+          arithmeticexpr
+            number
+            binaryoperator      +
+            arithmeticexpr
+              ", Text: "
+              binaryoperator    +
+              text
+        )
+        ;
+      }
+
+
+--------------------------------------------------
+
+Test Case 31: { x = 5; y = x + 10; pendown(y); }
+Tokens: ['{', 'x', '=', '5', ';', 'y', '=', 'x', '+', '10', ';', 'pendown', '(', 'y', ')', ';', '}']
+Parse Tree:
+program
+  block
+    {
+    statements
+      assignment
+        x
+        =
+        number  5
+        ;
+      assignment
+        y
+        =
+        arithmeticexpr
+          x
+          binaryoperator        +
+          number        10
+        ;
+      printfunction
+        pendown
+        (
+        y
+        )
+        ;
+    }
+
+
+--------------------------------------------------
