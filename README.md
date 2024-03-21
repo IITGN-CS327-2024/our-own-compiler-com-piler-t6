@@ -30,6 +30,10 @@ Refer to the [Assignment 4 PDF](https://github.com/IITGN-CS327-2024/our-own-comp
 
 Refer to the [Parser Files](https://github.com/IITGN-CS327-2024/our-own-compiler-com-piler-t6/tree/main/Assignment_4) to checkout our codes & textcases for the parser.
 
+## Assignment 5
+
+Execute the [main.py File](https://github.com/IITGN-CS327-2024/our-own-compiler-com-piler-t6/blob/main/Assignment_5/main.py) to see the outputs.
+
 ## Group Members
 
 - Reuben Devanesan, 19110059
