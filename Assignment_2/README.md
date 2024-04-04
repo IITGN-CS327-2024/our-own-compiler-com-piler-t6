@@ -325,19 +325,23 @@ Given (! x == 10) {
 
 - **Syntax**: `variable_name (data_type, size) = { }
 - - **Predefined Functions**:
-  - `.dim()`: Returns the dimension of the array.
-  - `.exchange(index, element)`: Exchanges the element at the specified index.
-  - `.getidx(value)`: Returns the index of the given value.
-  - `.sort(asc/dsc)`: Sorts the array in ascending or descending order.
-  - `.tail()`: return the tail of the array.
-  - `.head()`: return the first element of the array.
+  - `.array_dim()`: Returns the dimension of the array.
+  - `.array_exchange(index, element)`: Exchanges the element at the specified index.
+  - `.array_get_idx(value)`: Returns the index of the given value.
+  - `.array_sort(asc/dsc)`: Sorts the array in ascending or descending order.
+  - `.array_tail()`: return the tail of the array.
+  - `.array_head()`: return the first element of the array.
 
 ## List
 
 - **Syntax**: `[]`
 - **Predefined Functions** (similar to Array with additional methods):
-  - `.add(element)`: Adds an element to the list.
-  - `.remove(index)`: Removes an element at the specified index; if no index is provided, removes the last element.
+  - `.list_dim()`: Returns the dimension of the array.
+  - `.list_exchange(index, element)`: Exchanges the element at the specified index.
+  - `.array_get_idx(value)`: Returns the index of the given value.
+  - `.array_sort(asc/dsc)`: Sorts the array in ascending or descending order.
+  - `.array_tail()`: return the tail of the array.
+  - `.array_head()`: return the first element of the array.removes the last element.
 
 ## Tuple
 
@@ -367,6 +371,16 @@ Given (! x == 10) {
 ## Loops
 
 The `iterate` construct in our programming language provides a powerful way to loop through collections like lists or ranges with specific initializations and steps. It serves a similar purpose to the `for` loop in many other languages but is tailored to the syntax and semantics of this language.
+
+
+### While loop
+
+```plaintext
+while(condition){
+#Loop body
+}
+```
+
 
 ### Looping Through a List
 
