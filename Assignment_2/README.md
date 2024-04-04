@@ -323,35 +323,43 @@ Given (! x == 10) {
 
 ## Array
 
-- **Syntax**: `variable_name (data_type, size) = { }
-- - **Predefined Functions**:
+- **Syntax**: `variable_name(datatype, size) = {elements};`
+- **Predefined Functions**:
   - `.array_dim()`: Returns the dimension of the array.
-  - `.array_exchange(index, element)`: Exchanges the element at the specified index.
-  - `.array_get_idx(value)`: Returns the index of the given value.
-  - `.array_sort(asc/dsc)`: Sorts the array in ascending or descending order.
-  - `.array_tail()`: return the tail of the array.
-  - `.array_head()`: return the first element of the array.
+  - `.array_exchange(index, element)`: Exchanges the element at the specified index with the new element provided.
+  - `.array_get_idx(element)`: Returns the index of the given element in the array.
+  - `.array_sort(order)`: Sorts the array in ascending (`asc`) or descending (`desc`) order.
+  - `.array_tail()`: Returns all elements of the array except the first one.
+  - `.array_head()`: Returns the first element of the array.
 
 ## List
 
-- **Syntax**: `[]`
-- **Predefined Functions** (similar to Array with additional methods):
-  - `.list_dim()`: Returns the dimension of the array.
-  - `.list_exchange(index, element)`: Exchanges the element at the specified index.
-  - `.array_get_idx(value)`: Returns the index of the given value.
-  - `.array_sort(asc/dsc)`: Sorts the array in ascending or descending order.
-  - `.array_tail()`: return the tail of the array.
-  - `.array_head()`: return the first element of the array.removes the last element.
+- **Syntax**: `variable_name = [elements];`
+- **Predefined Functions**:
+  - `.list_dim()`: Returns the dimension of the list.
+  - `.list_exchange(index, element)`: Exchanges the element at the specified index with the new element provided.
+  - `.list_get_idx(element)`: Returns the index of the given element in the list.
+  - `.list_sort(order)`: Sorts the list in ascending (`asc`) or descending (`desc`) order.
+  - `.list_tail()`: Returns all elements of the list except the first one.
+  - `.list_head()`: Returns the first element of the list.
+  - `.list_add(element)`: Adds the specified element to the end of the list.
+  - `.list_remove(index)`: Removes the element at the specified index from the list.
 
 ## Tuple
 
-- **Syntax**: `()`
-- **Predefined Functions** (similar to List without `.add()` and `.remove()` methods):
-  - Tuples are immutable.
+- **Syntax**: `variable_name = (elements);`
+- **Predefined Functions**:
+  - `.tuple_dim()`: Returns the dimension of the tuple.
+  - `.tuple_get_idx(element)`: Returns the index of the given element in the tuple.
+  - `.tuple_tail()`: Returns all elements of the tuple except the first one.
+  - `.tuple_head()`: Returns the first element of the tuple.
 
 ## Dictionary
 
-- **Syntax**: `variable_name = { key : value }`
+- **Syntax**: `variable_name = {key: value, ...};`
+- **Predefined Function**:
+  - `.dictionary_set(key, value)`: Sets the value for the specified key in the dictionary. If the key exists, its value is updated; if the key does not exist, the key-value pair is added to the dictionary.
+
 
 ## Conditional Statements
 
