@@ -7,25 +7,25 @@ strive() { throwexception("Error"); } capture() { pendown("Caught an exception")
 x = 10;
 x++; y--;
 pendown("This is a test");
-arr(integer, 5) = {1, 2, 3, 4, 5};
+arr(integer, 5) = {"apple", "banana", "cherry"};
 myList = ["apple", "banana", "cherry"];
 myTuple = ("apple", "banana", "cherry");
 myDict = {"name": "John", "age": 30};
 i(integer) = arr.array_dim(); 
-i(integer) = arr.array_getidx(2);
+i(integer) = arr.array_get_idx(2);
 i(integer) = myList.list_dim(); 
 i.list_add("date");
 i(integer) = myTuple.tuple_dim();
 myDict.dictionary_set("name", "Jane");
-fn getFive() -> integer { return 5; }
+fn getFive() -> integer { exitwith 5; }
 x = 5 + 3 * 2;
 Given(x > 5 && y < 10) { pendown("x is greater than 5 and y is less than 10"); }
 x = myList[0];
 Given (!flag) { pendown("flag is false"); }
 userName = penup("Enter your name: ");
 fn calculate(index(integer)) -> integer { Given (index <= 1) { exitwith index; } Otherwise { exitwith calculate(index - 1) + calculate(index - 2); } } calculate(5);
-iterate (i (integer) = 0; through range(0...10, 1);) { Given (i == 5) { interrupt; } pendown(i); }
-iterate (i (integer) = 0; through listnamedluadhgkjdfjvbdfoivhfobha;) { Given (i == 5) { resume; } pendown("Skipping 5"); }
+iterate (i (integer) through range(0...10, 1)) { Given (i == 5) { interrupt; } pendown(i); }
+iterate (i (integer) through listname) { Given (i == 5) { resume; } pendown("Skipping5");}
 result = (a + b) / (c - d) * e;
 fn mixTypes(number(integer), text(textwave)) -> integer { pendown("Number: " + number + ", Text: " + text); }
 { x = 5; y = x + 10; pendown(y); }
