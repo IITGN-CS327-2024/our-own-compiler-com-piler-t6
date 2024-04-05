@@ -1,1 +1,5 @@
-x (integer) = 5;
+x(integer) = 5.0;
+x(textwave) = "reeeeeeee";
+x(character) = "reeeeeeee";
+x(floatpoint) = 5;
+x (flag) = True;
