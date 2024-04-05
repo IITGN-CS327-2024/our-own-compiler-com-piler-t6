@@ -1,0 +1,303 @@
+?start: program
+
+program: statements
+
+?statements: statement*
+?statement: variabledecl
+           | immutablevariabledecl
+           | functiondecl
+           | loop
+           | conditional
+           | exceptionhandling
+           | assignment
+           | unaryoperation
+           | printfunction
+           | block
+           | loopinterrupt  
+           | loopresume
+           | throwexception
+           | arraydecl
+           | listdecl
+           | tupledecl
+           | dictionarydecl
+           | method_call
+           | methods_type_2
+           | return_statement  
+           | functioncall1
+
+return_statement: EXITWITH expression ENDOST
+variabledecl: VARIABLENAME LPAREN datatype RPAREN EQUALTO expression ENDOST
+immutablevariabledecl: IMMUTABLE VARIABLENAME LPAREN datatype RPAREN EQUALTO literal ENDOST 
+datatype: INTEGER | CHAR | FLOATPOINT | TEXTWAVE | FLAG
+
+         
+?expression: inputfunction
+           | logicalexpr
+           | comparisonexpr
+           | accessexpression
+           | dictionaryaccess
+           | list
+           | listaccess
+           | negation
+           | method_call
+           | term
+           | arithmeticexpr
+
+method_call: (array_methods
+           | list_methods
+           | tuple_methods
+           | dictionary_methods)
+
+
+negation: NOT factor
+list: LSQUARE elements RSQUARE
+listaccess: expression LSQUARE expression RSQUARE
+
+dictionaryaccess: VARIABLENAME LSQUARE key RSQUARE
+
+matrix: LSQUARE matrix_elements RSQUARE
+matrix_elements: matrix_element (COMMA matrix_element)* | 
+matrix_element: list
+
+comparisonexpr: expression comparisonoperator expression
+?comparisonoperator: SMALLERTHAN | GREATERTHAN | EQUALEQUAL | NOTEQUALTO | LESSTHANEQUALTO | GREATERTHANEQUALTO
+
+
+arithmeticexpr: expression binaryoperator expression
+binaryoperator: PLUS | MINUS | STAR | SLASH | PERCENT | CARET
+
+logicalexpr: expression logicaloperator expression
+logicaloperator: AND | OR
+
+
+?simpleexpression: term (binaryoperator term)*
+?term: factor
+     | LPAREN expression RPAREN  
+
+?factor: VARIABLENAME
+       | number
+       | floatnumber
+       | CHARACTER  
+       | STRING    
+       | TRUE
+       | FALSE
+       | functioncall2
+
+
+
+accessexpression: VARIABLENAME accessoperator
+accessoperator: LSQUARE number RSQUARE | LSQUARE number COLON number RSQUARE
+
+
+number: (PLUS | MINUS)? /[0-9]+/
+floatnumber: (PLUS | MINUS)? /[0-9]+\.[0-9]+/
+
+literal: number | floatnumber | CHARACTER | TRUE | FALSE | STRING
+
+
+conditional: givenclause elsegivenclause otherwiseclause
+givenclause: GIVEN LPAREN [expression] RPAREN block
+elsegivenclause: ELSEGIVEN LPAREN [expression] RPAREN block | 
+otherwiseclause: OTHERWISE block | 
+
+functiondecl: FN functionname LPAREN arguments RPAREN ARROW datatype block
+functionname: VARIABLENAME
+?arguments: argument (COMMA argument)* |
+?argument: VARIABLENAME LPAREN datatype RPAREN
+
+
+functioncall1: VARIABLENAME LPAREN [functionargs] RPAREN ENDOST
+
+functioncall2: VARIABLENAME LPAREN [functionargs] RPAREN 
+
+?functionargs: functionarg (COMMA functionarg)* 
+functionarg: expression
+
+
+
+loop: whileloop | iterateloop | rangeloop
+whileloop: WHILE LPAREN expression RPAREN block
+iterateloop: ITERATE LPAREN VARIABLENAME LPAREN datatype RPAREN EQUALTO expression ENDOST THROUGH VARIABLENAME ENDOST RPAREN block
+rangeloop: ITERATE LPAREN VARIABLENAME LPAREN datatype RPAREN EQUALTO expression ENDOST THROUGH RANGE LPAREN expression DOTDOTDOT expression COMMA expression RPAREN ENDOST RPAREN block
+loopinterrupt: INTERRUPT ENDOST
+loopresume: RESUME ENDOST
+
+exceptionhandling: striveblock captureblock
+striveblock: STRIVE LPAREN RPAREN block
+captureblock: CAPTURE (LPAREN [VARIABLENAME] RPAREN)? block 
+throwexception: THROWEXCEPTION LPAREN STRING RPAREN ENDOST
+
+unaryoperation: VARIABLENAME INCREMENT ENDOST | VARIABLENAME DECREMENT ENDOST
+assignment: VARIABLENAME EQUALTO expression ENDOST | VARIABLENAME assignmentoperator expression ENDOST
+assignmentoperator: PLUSEQUAL | MINUSEQUAL | TIMESEQUAL | DIVIDEEQUAL | MODEQUAL
+
+arraydecl: VARIABLENAME LPAREN datatype COMMA number RPAREN EQUALTO LCURL elements RCURL ENDOST 
+listdecl: VARIABLENAME EQUALTO LSQUARE elements RSQUARE ENDOST 
+tupledecl: VARIABLENAME EQUALTO LPAREN elements RPAREN ENDOST 
+dictionarydecl: VARIABLENAME EQUALTO LCURL key_values RCURL ENDOST
+
+elements: element (COMMA element)* | 
+element: expression
+
+key_values: key_value (COMMA key_value)* | 
+key_value: key COLON value
+
+array_methods: array_dim
+             | array_get_idx
+             | array_tail
+             | array_head
+
+             
+list_methods: list_dim
+            | list_get_idx
+            | list_tail
+            | list_head
+            
+
+tuple_methods: tuple_dim
+             | tuple_get_idx
+             | tuple_tail
+             | tuple_head
+
+methods_type_2: array_exchange
+                | array_sort
+                | list_exchange
+                | list_sort
+                | list_add
+                | list_remove
+
+dictionary_methods: dictionary_set
+
+// Array methods
+array_dim: VARIABLENAME DOT ARRAYDIM PAREN 
+array_get_idx: VARIABLENAME DOT ARRAYINDEX LPAREN element RPAREN 
+array_tail: VARIABLENAME DOT ARRAYTAIL PAREN
+array_head: VARIABLENAME DOT ARRAYHEAD PAREN
+
+// Array method1
+array_exchange: VARIABLENAME DOT ARRAYEXCHANGE LPAREN number COMMA element RPAREN ENDOST
+array_sort: VARIABLENAME DOT ARRAYSORT LPAREN sort_order RPAREN ENDOST
+
+// List methods
+list_dim: VARIABLENAME DOT LISTDIM PAREN
+list_exchange: VARIABLENAME DOT LISTEXCHANGE LPAREN number COMMA element RPAREN ENDOST
+list_get_idx: VARIABLENAME DOT LISTINDEX LPAREN element RPAREN 
+list_sort: VARIABLENAME DOT LISTSORT LPAREN sort_order RPAREN ENDOST
+list_tail: VARIABLENAME DOT LISTTAIL PAREN
+list_head: VARIABLENAME DOT LISTHEAD PAREN 
+list_add: VARIABLENAME DOT LISTADD LPAREN element RPAREN ENDOST
+list_remove: VARIABLENAME DOT LISTREMOVE LPAREN number RPAREN ENDOST 
+
+// Tuple methods
+tuple_dim: VARIABLENAME DOT TUPLEDIM PAREN 
+tuple_get_idx: VARIABLENAME DOT TUPLEINDEX LPAREN element RPAREN 
+tuple_tail: VARIABLENAME DOT TUPLETAIL PAREN 
+tuple_head: VARIABLENAME DOT TUPLEHEAD PAREN 
+
+// Dictionary method
+dictionary_set: VARIABLENAME DOT DICTSET LPAREN key COMMA value RPAREN 
+
+// Sort order definition
+sort_order: ASC | DESC
+
+
+printfunction: PENDOWN LPAREN expression RPAREN ENDOST 
+inputfunction: PENUP LPAREN [STRING] RPAREN 
+
+
+block: LCURL statements RCURL
+
+LPAREN: "(" 
+RPAREN: ")"
+ENDOST: ";"
+EQUALTO: "="
+LCURL: "{"
+RCURL: "}"
+LSQUARE: "["
+RSQUARE: "]"
+IMMUTE: "immute"
+INTEGER: "integer"
+CHAR: "character"
+FLOATPOINT: "floatpoint"
+TEXTWAVE: "textwave"
+FLAG: "flag"
+PLUS: "+"
+MINUS: "-"
+STAR: "*"
+SLASH: "/"
+PERCENT: "%"
+CARET: "^"
+AND: "&&"
+OR: "||"
+NOT: "!"
+TRUE: "True"
+FALSE: "False"
+COLON: ":"
+DOT: "."
+FN: "fn"
+COMMA: ","
+WHILE: "while"
+ITERATE: "iterate"
+THROUGH: "through"
+RANGE: "range"
+DOTDOTDOT: "..."
+INTERRUPT: "interrupt"
+RESUME: "resume"
+STRIVE: "strive"
+CAPTURE: "capture"
+INCREMENT: "++"
+DECREMENT: "--"
+PLUSEQUAL: "+="
+MINUSEQUAL: "-="
+TIMESEQUAL: "*="
+DIVIDEEQUAL: "/="
+MODEQUAL: "%="
+GREATERTHAN: ">"
+SMALLERTHAN: "<"
+EQUALEQUAL: "=="
+NOTEQUALTO: "!="
+LESSTHANEQUALTO: "<="
+GREATERTHANEQUALTO: ">="
+ARROW: "->"
+GIVEN: "Given"
+ELSEGIVEN: "ElseGiven"
+OTHERWISE: "Otherwise"
+THROWEXCEPTION: "throwexception"
+PAREN: "()"
+ARRAYDIM: "array_dim"
+ARRAYINDEX: "array_get_idx"
+ARRAYTAIL: "array_tail"
+ARRAYHEAD: "array_head"
+ARRAYEXCHANGE: "array_exchange"
+ARRAYSORT: "array_sort"
+LISTDIM: "list_dim"
+LISTEXCHANGE: "list_exchange"
+LISTINDEX: "list_get_idx"
+LISTTAIL: "list_tail"
+LISTHEAD: "list_head"
+LISTSORT: "list_sort"
+LISTADD: "list_add"
+LISTREMOVE: "list_remove"
+TUPLEDIM: "tuple_dim"
+TUPLEINDEX: "tuple_get_idx"
+TUPLETAIL: "tuple_tail"
+TUPLEHEAD: "tuple_head"
+DICTSET: "dictionary_set"
+PENDOWN: "pendown"
+PENUP: "penup"
+ASC: "asc"
+DESC: "desc"
+EXITWITH: "exitwith"
+IMMUTABLE: "immute"
+
+
+
+DIGIT: "0".."9"
+VARIABLENAME: /[a-zA-Z_][a-zA-Z0-9_]*/
+key: expression
+value: expression
+anytext: /(?:[^"\\]|\\.)?/
+STRING: /"(?:[^"\\\\]|\\\\.)*"/
+CHARACTER: /'.'/ 
+%ignore " "
+%ignore /\s+/
