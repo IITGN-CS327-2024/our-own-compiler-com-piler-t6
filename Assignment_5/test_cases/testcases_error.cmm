@@ -1,0 +1,4 @@
+x (integer) == 4;
+iterate (i (integer) = 0; through range(0...10, 1);) { Given (i == 5) { interrupt; } pendown(i);}
+iterate (i (integer) = 0; through listname;) { Given (i == 5) { resume; } pendown("Skipping 5"); }
+

@@ -1,6 +1,7 @@
 import os
 import sys
 from lark import Lark, Transformer, Tree, Token
+import argparse
 
 
 root_dir = os.path.join(os.path.dirname(__file__), '..')
@@ -521,7 +522,12 @@ class ASTTransformer(Transformer):
 
 
 def main():
-    test_cases_folder = 'test_cases'
+    test_cases_folder = 'Assignment_5/test_cases'
+
+    parser = argparse.ArgumentParser(description="Process .cmm files.")
+    parser.add_argument('file', nargs='?', help="The .cmm file to process. If not provided, process all .cmm files in the default directory.")
+    args = parser.parse_args()
+    
     grammar = """
     ?start: program
 
@@ -575,7 +581,7 @@ def main():
 
     negation: NOT factor
     list: LSQUARE elements RSQUARE
-    listaccess: VARIABLENAME LSQUARE expression RSQUARE
+    listaccess: expression LSQUARE expression RSQUARE
 
     dictionaryaccess: VARIABLENAME LSQUARE key RSQUARE
 
@@ -835,11 +841,16 @@ def main():
 
     parser = Lark(grammar, start='start', parser='lalr')
     transformer = ASTTransformer()
-
-    test_case_files = [f for f in os.listdir(test_cases_folder) if f.endswith('.cmm')]
+    
+    # Determine whether to process a single file or all files in the directory
+    if args.file:
+        test_case_files = [args.file]
+    else:
+        test_case_files = [f for f in os.listdir(test_cases_folder) if f.endswith('.cmm')]
 
     for test_case_file in test_case_files:
-        test_case_file_path = os.path.join(test_cases_folder, test_case_file)
+        test_case_file_path = test_case_file if args.file else os.path.join(test_cases_folder, test_case_file)
+        
         with open(test_case_file_path, "r") as file:
             test_cases_content = file.read()
         
@@ -848,9 +859,9 @@ def main():
             parse_tree = parser.parse(test_cases_content)
             ast = transformer.transform(parse_tree) 
             print("AST Output:")
-            print_ast(ast)  
+            print_ast(ast) 
         except Exception as e:
-            print(f"Error parsing file {test_case_file_path}: {e}")
+            print(f"Error: {e}")
 
 if __name__ == "__main__":
     main()
