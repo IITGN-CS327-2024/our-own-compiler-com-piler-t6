@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys, argparse, operator, logging 
 from lark import Lark, Transformer, Tree, Token
 
 
@@ -9,7 +8,6 @@ sys.path.insert(0, root_dir)
 from Assignment_2.Lexer import Lexer
 
 def print_ast(node, indent="", last=True):
-    # Handle Lark Tree instances
     if isinstance(node, Tree):
         name = node.data
         children = node.children
@@ -18,13 +16,10 @@ def print_ast(node, indent="", last=True):
         for i, child in enumerate(children):
             print_ast(child, new_indent, i == len(children) - 1)
 
-    # Handle Lark Token instances
     elif isinstance(node, Token):
         print(f"{indent}{'└── ' if last else '├── '}{node.type}({node.value})")
 
-    # Handle dictionary (custom AST nodes) instances
     elif isinstance(node, dict):
-        # Only process if "type" field exists; otherwise, directly print children
         if "type" in node:
             name = node["type"]
             print(f"{indent}{'└── ' if last else '├── '}{name}")
@@ -52,16 +47,110 @@ def print_ast(node, indent="", last=True):
 
 
 class ASTTransformer(Transformer):
-    
+
+    def __init__(self):
+        # Initialize the dictionary that maps operator symbols to functions
+        self.operators = {
+            '+': operator.add,
+            '-': operator.sub,
+            '*': operator.mul,
+            '/': operator.truediv,
+            '%': operator.mod,
+            '^': operator.pow,
+            'AND': operator.and_,  # Logical AND (ensure you handle booleans correctly)
+            'OR': operator.or_,    # Logical OR (ensure you handle booleans correctly)
+            'SMALLERTHAN': operator.lt,
+            'GREATERTHAN': operator.gt,
+            'EQUALEQUAL': operator.eq,
+            'NOTEQUALTO': operator.ne,
+            'LESSTHANEQUALTO': operator.le,
+            'GREATERTHANEQUALTO': operator.ge
+        }
+
+    # def evaluate_expression(self, node, path=''):
+    #     """ Recursively evaluate the expression tree. """
+    #     try:
+    #         if node['type'] == 'number':
+    #             return int(node['INTEGER']) 
+
+    #         elif node['type'] == 'arithmetic_expr':
+    #             # Construct the path for debugging
+    #             new_path = f"{path} -> {node['operator']}"
+
+    #             # Recursively evaluate the left and right expressions
+    #             left_val = self.evaluate_expression(node['left'], path=new_path + " (left)")
+    #             right_val = self.evaluate_expression(node['right'], path=new_path + " (right)")
+                
+    #             # Apply the operator
+    #             return self.operators[node['operator']](left_val, right_val)
+
+    #         else:
+    #             raise ValueError(f"Unsupported expression type: {node['type']} at path {path}")
+
+    #     except Exception as e:
+    #         # Log the error with detailed node information
+    #         logging.error(f"Failed to evaluate node at path {path}: {node}")
+    #         raise TypeError(f"Error evaluating expression at {path}: {e}") from e
+
     def start(self, items):
         return {"type": "program", "body": items[0]}
 
     def statements(self, items):
         return {"type": "statements", "body": items}
+    
+    def variabledecl(self, items):
+        name = items[0]
+        datatype_tree = items[2]
+        expression = items[5]
 
-    # Function handling
+        datatype = datatype_tree.children[0].value
+        
+        # print(datatype)
+
+        def evaluate_expression(expression):
+            if isinstance(expression, int):
+                return expression, 'integer'
+            elif isinstance(expression, float):
+                return expression, 'float'
+            elif isinstance(expression, str) and len(expression) == 1:
+                return expression, 'character'
+            elif isinstance(expression, str):
+                return expression, 'string'
+            elif isinstance(expression, bool):
+                return expression, 'bool'
+            else:
+                return expression, str(type(expression).__name__)
+
+        expression_value, expression_type = evaluate_expression(expression)
+
+       
+
+        # if datatype == "integer" and expression_type != 'integer':
+        #     print(f"Expected integer, got {expression_type}")
+
+        # elif datatype == "character" and (expression_type != 'character' or len(expression_value) != 1):
+        #     print(f"Expected character, got {expression_type}")
+
+        # elif datatype == "floatpoint" and expression_type != 'float':
+        #     print(f"Expected floatpoint, got {expression_type}")
+
+        # elif datatype == "textwave" and expression_type != 'string':
+        #     print(f"Expected textwave, got {expression_type}")
+
+        # elif datatype == "flag" and expression_type != 'bool':
+        #     print(f"Expected flag, got {expression_type}")
+
+        return {
+            "type": "variable_decl",
+            "name": str(name),
+            "datatype": datatype,
+            "value": expression
+        }
+
+
+       
+
     def functiondecl(self, items):
-        # Accessing items by index
         name = items[1]
         args = items[3]
         return_type = items[6]
@@ -84,52 +173,12 @@ class ASTTransformer(Transformer):
         name = items[0]
         args = items[2]
         return {"type": "function_call", "name": name, "args": args}
-        
 
-    def variabledecl(self, items):
-        name = items[0]  
-        datatype = items[2] 
-        expression = items[5] 
-
-        # jugaad
-        temp = str(datatype)
-        lr = temp.split("'")
-        check = lr[len(lr)-2]
-        # exp = str(expression).split("'")
-        # val = exp[len(exp)-1][2:]
-        # val = val[:-1]
-
-        print(check)
-        print(expression)
-        # print(val)
-        # print(type(value))
-
-        if(check == "integer" and (not isinstance(expression, int))):
-            print("Expected integer got ", type(expression))
-
-        if(check == "character" and (not isinstance(expression, str))):
-            if(isinstance(expression, str) and len(expression) == 1):
-                print("Expected character got ", type(expression))
-
-        if(check == "floatpoint" and (not isinstance(expression, float))):
-            print("Expected floatpoint got ", type(expression))
-
-        if(check == "textwave" and (not isinstance(expression, str))):
-            print("Expected textwave got ", type(expression))
-
-        if(check == "flag" and (not isinstance(expression, bool))):
-            print("Expected flag got ", type(expression))
-
-
-        return {
-        "type": "variable_decl",
-        "name": str(name),
-        "value": expression
-    }
 
     def arithmeticexpr(self, items):
-        # As arithmeticexpr is now directly linked to simpleexpression, simply pass through
         return items[0]
+        # ans = self.evaluate_expression(items[0])
+        # return {'type': 'number', 'INTEGER': ans}
 
     def simpleexpression(self, items):
         # Handles term ((PLUS|MINUS) term)*
@@ -215,18 +264,17 @@ class ASTTransformer(Transformer):
         name = items[1]  
         datatype = items[3] 
         expression = items[6]
-        return {"type": "immutable_variable_decl", "name": name, "value": expression}
+        return {"type": "immutable_variable_decl", "name": name, "datatype":datatype,   "value": expression}
     
     def whileloop(self, items):
-    # No changes; this appears correct.
         return {"type": "while_loop", "condition": items[2], "body": items[4]}
 
     def rangeloop(self, items):
-        var_name = items[2]  # VARIABLENAME
-        var_type = items[4]  # datatype
-        range_start = items[9]  # expression before DOTDOT
-        range_end = items[11]  # expression after DOTDOT
-        step = items[13]  # expression after COMMA
+        var_name = items[2]  
+        var_type = items[4]  
+        range_start = items[9]  
+        range_end = items[11]  
+        step = items[13] 
 
         return {
             "type": "iterate_loop_range",
@@ -234,19 +282,19 @@ class ASTTransformer(Transformer):
             "range_start": range_start,
             "range_end": range_end,
             "step": step,
-            "body": items[-1]  # The last item is assumed to be the 'block'
+            "body": items[-1]  
         }
 
     def iterateloop(self, items):
-        var_name = items[2]  # VARIABLENAME
-        var_type = items[4]  # datatype
-        list_name = items[7]  # VARIABLENAME after THROUGH
+        var_name = items[2]  
+        var_type = items[4] 
+        list_name = items[7]  
 
         return {
             "type": "iterate_loop_list",
             "variable": {"name": var_name, "data_type": var_type},
             "through": list_name,
-            "body": items[-1]  # The last item is assumed to be the 'block'
+            "body": items[-1]  
         }
 
 
@@ -508,23 +556,18 @@ class ASTTransformer(Transformer):
         }
     
     def accessexpression(self, items):
-        # Transform the variable part (assuming it's the first item and always a Token or Tree requiring transformation)
         variable = self.transform(items[0]) if isinstance(items[0], Tree) else items[0].value
 
-        # Extracting the index directly from the 'accessoperator' tree
-        # Ensure that we are accessing the Tree correctly and safely extract the index value
+
         if isinstance(items[1], Tree) and items[1].data == 'accessoperator':
-            # Find the actual index value, which should be the dictionary with the 'type': 'number'
-            # Assuming the second child is the index value (skipping the LSQUARE token)
+
             index_structure = items[1].children[1]
             if isinstance(index_structure, dict):
-                # If the index is directly given as a dictionary (from previous transformation)
+
                 index_value = index_structure.get('INTEGER')
             elif isinstance(index_structure, Tree):
-                # If the index is wrapped in a Tree, further transformation might be needed
                 index_value = self.transform(index_structure)
             else:
-                # Handle other cases as needed, for instance, direct Token handling
                 index_value = None
         else:
             index_value = None
@@ -550,12 +593,276 @@ class ASTTransformer(Transformer):
         return {"type": "loop_continue"}
 
     def return_statement(self, items):
-        return {"type": "return_statement", "value": items[1]}
+        return {"type": "return_statement", "value": items[1]}  
+    
+class SymbolTable:
+    def __init__(self):
+        self.stack = [{}]
 
+    def enter_scope(self):
+        self.stack.append({})
+
+    def exit_scope(self):
+        if self.stack:
+            current_scope = self.stack.pop()
+            # print(f"Exiting scope, variables in this scope are: {list(current_scope.keys())}")
+            return current_scope
+        return None
+
+    def define_symbol(self, name, info):
+        if name in self.stack[-1]:
+            # print(f"Error: Variable '{name}' is declared multiple times in the same scope.")
+            return False  # Already declared in the current scope
+        self.stack[-1][name] = info
+        # print(f"Variable '{name}' added to scope with info: {info}")
+        return True
+    
+    def update_symbol(self, name, new_value):
+        for scope in reversed(self.stack):
+            if name in scope:
+                old_info = scope[name]
+                old_info['value'] = new_value  # Update the value while preserving the type
+                # print(f"Variable '{name}' updated in scope with new value: {new_value}")
+                return True
+        # print(f"Error: Variable '{name}' is accessed before declaration.")
+        return False
+
+
+    def lookup_symbol(self, name):
+        for scope in reversed(self.stack):
+            if name in scope:
+                return scope[name]
+        return None  # Symbol not found
+
+    def lookup_symbol_in_current_scope(self, name):
+        return name in self.stack[-1]
+
+    def print_symbol_table(self):
+        for i, scope in enumerate(self.stack):
+            print(f"Scope level {i}: {scope}")
+
+class MyASTTransformer:
+    def __init__(self, symbol_table):
+        self.symbol_table = symbol_table
+        self.errors = []
+
+    def block(self, tokens):
+        keywords = {
+            "immute", "integer", "character", "floatpoint", "textwave", "flag", "True", "False",
+            "fn", "while", "iterate", "through", "range", "interrupt", "resume", "strive",
+            "capture", "Given", "ElseGiven", "Otherwise", "throwexception", "array_dim",
+            "array_get_idx", "array_tail", "array_head", "array_exchange", "array_sort",
+            "list_dim", "list_exchange", "list_get_idx", "list_tail", "list_head", "list_sort",
+            "list_add", "list_remove", "tuple_dim", "tuple_get_idx", "tuple_tail", "tuple_head",
+            "dictionary_set", "pendown", "penup", "asc", "desc", "exitwith"
+        }
+
+        # print("Starting block function...")
+        self.symbol_table.enter_scope()
+        i = 0
+        while i < len(tokens):
+            token = tokens[i]
+            # print(f"Processing token: {token.type} with value: {token.value}")
+            if token.type == 'LCURL':
+                self.symbol_table.enter_scope()
+                # print("Entered new scope")
+            elif token.type == 'RCURL':
+                self.symbol_table.exit_scope()
+                # print("Exiting current scope")
+            elif token.type == 'FN': 
+                function_name = tokens[i+1].value
+                i += 3  
+                parameters = []
+                self.symbol_table.enter_scope()
+                while tokens[i].type != 'RPAREN':
+                    param_name = tokens[i].value
+                    if tokens[i+1].type != 'LPAREN' or tokens[i+3].type != 'RPAREN':
+                        raise Exception("Syntax Error in parameter declaration")
+                    param_type = tokens[i+2].value
+                    parameters.append((param_name, param_type))
+                    self.symbol_table.define_symbol(param_name, {'type': param_type, 'value': None})
+                    i += 4  # Move past param_name(LPAREN param_type RPAREN)
+                    if tokens[i].type == 'COMMA':
+                        i += 1 
+                i += 1
+                if tokens[i].type != 'ARROW':
+                    # print(tokens[i].type)
+                    raise Exception("Syntax Error: Expected '->' after parameters")
+                return_type = tokens[i+1].value
+                i += 1
+                self.symbol_table.define_symbol(function_name, {
+                    'type': 'function', 'parameters': parameters, 'return_type': return_type,
+                })
+            elif token.type == 'VARIABLENAME':
+                if token.value in keywords:
+                    self.errors.append(f"Semantic Error: '{token.value}' is a reserved keyword and cannot be used as a variable name.")
+                else:
+                    next_token = tokens[i+1]
+                    if next_token.type == 'LPAREN':  # Start of a declaration or a function call
+                        if (i+4) < len(tokens) and tokens[i+4].type == 'EQUALTO':  # Declaration
+                            type_info = tokens[i+2].value
+                            if tokens[i+3].type == 'RPAREN':
+                                value_info = tokens[i+5].value
+                                if not self.symbol_table.lookup_symbol_in_current_scope(token.value):
+                                    self.symbol_table.define_symbol(token.value, {'type': type_info, 'value': value_info})
+                                    i += 5  # Advance index past the declaration
+                                else:
+                                    self.errors.append(f"Error: Redefinition of '{token.value}' in the same scope is not allowed.")
+                        else:
+                            i += 2  # Move to the first argument or to ')'
+                            args = []
+                            arg_types = []
+                            while tokens[i].type != 'RPAREN':
+                                if tokens[i].type == 'VARIABLENAME':
+                                    arg_value = tokens[i].value
+                                    args.append(arg_value)
+                                    var_info = self.symbol_table.lookup_symbol(arg_value)
+                                    if var_info:
+                                        arg_types.append(var_info['type'])
+                                    else:
+                                        self.errors.append(f"Error: Variable '{arg_value}' used as argument not declared.")
+                                i += 1  # Move to ',' or ')'
+                                if tokens[i].type == 'COMMA':
+                                    i += 1  # Skip ','
+                          
+                            i += 1  # Skip past ')'
+                            if tokens[i].type == 'ENDOST':
+                                # Confirm it's a function call by the presence of ';'
+                                func_info = self.symbol_table.lookup_symbol(token.value)
+                                if func_info:
+                                    # Validate the number and types of arguments
+                                    param_types = [param[1] for param in func_info['parameters']]
+                                    if len(func_info['parameters']) == len(args) and param_types == arg_types:
+                                        # print(f"Function call to {token.value} is valid with arguments {args}.")
+                                        pass
+                                    else:
+                                        mismatch_detail = " or incorrect types of arguments." if len(func_info['parameters']) == len(args) else " or incorrect number of arguments."
+                                        self.errors.append(f"Function '{token.value}' called with incorrect arguments" + mismatch_detail)
+                                else:
+                                    self.errors.append(f"Function '{token.value}' called but not declared.")
+                                i += 1  # Move past ';'
+                            else:
+                                self.errors.append(f"Syntax error near {token.value}, expected ';'.")
+                    elif next_token.type == 'EQUALTO':
+                        if self.symbol_table.lookup_symbol(token.value):
+                            value_info = tokens[i+2].value
+                            self.symbol_table.update_symbol(token.value, value_info) 
+                            i += 2  
+                        else:
+                            self.errors.append(f"Error: Variable '{token.value}' is accessed before declaration.")
+                    
+            i += 1
+
+
+
+            
+
+        
+        # print("Exiting top scope")
+
+        if self.errors:
+            for error in self.errors:
+                print(error)
+
+        # print("Symbol table state at end of block:", self.symbol_table.stack)
+
+
+
+# class MyASTTransformer(Transformer):
+#     def __init__(self, symbol_table):
+#         self.symbol_table = symbol_table
+#         self.errors = []  # To store semantic errors
+
+#     def enter_new_scope(self):
+#         self.symbol_table.enter_scope()
+
+#     def exit_current_scope(self):
+#         self.symbol_table.exit_scope()
+        
+#     def block(self, items):
+
+        
+
+        
+#         statements = [item for item in items if not isinstance(item, Token) or item.type not in ['LCURL', 'RCURL']]
+        
+#         processed_statements = [self.transform(statement) if isinstance(statement, Tree) else statement for statement in statements]
+
+#         self.symbol_table.exit_scope()
+
+#         return {
+#             "type": "block",
+#             "body": processed_statements
+#         }
+    
+#     def variabledecl(self, items):
+#         name = str(items[0])
+#         datatype = items[2]
+#         expression = items[5]
+
+#         # Check for reserved keywords
+#         keywords = {
+#             "immute", "integer", "character", "floatpoint", "textwave", "flag", "True", "False",
+#             "fn", "while", "iterate", "through", "range", "interrupt", "resume", "strive",
+#             "capture", "Given", "ElseGiven", "Otherwise", "throwexception", "array_dim",
+#             "array_get_idx", "array_tail", "array_head", "array_exchange", "array_sort",
+#             "list_dim", "list_exchange", "list_get_idx", "list_tail", "list_head", "list_sort",
+#             "list_add", "list_remove", "tuple_dim", "tuple_get_idx", "tuple_tail", "tuple_head",
+#             "dictionary_set", "pendown", "penup", "asc", "desc", "exitwith"
+#         }
+
+#         if name in keywords:
+#             self.errors.append(f"Semantic Error: '{name}' is a reserved keyword and cannot be used as a variable name.")
+#             return items  # Return without adding to symbol table
+
+#         # Check for redeclarations in the current scope
+#         if self.symbol_table.lookup_symbol(name) is not None:
+#             self.errors.append(f"Semantic Error: Variable '{name}' is already declared.")
+#         else:
+#             # Add the symbol to the table if no errors
+#             self.symbol_table.define_symbol(name, {"type": datatype, "value": expression})
+
+#         # Return the transformed node; you might choose to modify it based on your needs
+#         return {
+#             "type": "variable_decl",
+#             "name": name,
+#             "datatype": datatype,
+#             "value": expression
+#         }
+#     def assignment(self, items):
+#         variable_name = str(items[0])
+#         if not self.symbol_table.lookup_symbol(variable_name):
+#             self.errors.append(f"Error: Variable '{variable_name}' is used before declaration or out of scope.")
+#         return items
+    
+
+
+
+
+def collect_tokens(node, tokens=None):
+    if tokens is None:
+        tokens = []
+
+    if isinstance(node, Tree):
+        for child in node.children:
+            collect_tokens(child, tokens)
+    elif isinstance(node, Token):
+        tokens.append(node)
+    elif isinstance(node, (list, tuple)):
+        for item in node:
+            collect_tokens(item, tokens)
+    return tokens
+
+# def collect_tokens(parse_tree):
+#     tokens = []
+#     for subtree in parse_tree.iter_subtrees():
+#         for token in subtree.scan_values(lambda v: isinstance(v, Token)):
+#             tokens.append(token)
+#     return tokens
 
 def main():
-    test_cases_folder = './test_cases'
-    grammar = """
+
+    ggrammar = """
     ?start: program
 
     program: statements
@@ -642,9 +949,7 @@ def main():
     ?base: LPAREN expression RPAREN
         | VARIABLENAME
         | number
-        | floatnumber
-        | CHARACTER  
-        | STRING    
+        | floatnumber   
         | TRUE
         | FALSE
         | functioncall2 
@@ -661,14 +966,13 @@ def main():
 
 
     conditional: givenclause elsegivenclause otherwiseclause
-    givenclause: GIVEN LPAREN [expression] RPAREN block
-    elsegivenclause: ELSEGIVEN LPAREN [expression] RPAREN block | 
+    givenclause: GIVEN LPAREN [logicalexpr] RPAREN block
+    elsegivenclause: ELSEGIVEN LPAREN [logicalexpr] RPAREN block | 
     otherwiseclause: OTHERWISE block | 
 
     functiondecl: FN functionname LPAREN arguments RPAREN ARROW datatype block
-    functionname: VARIABLENAME
     ?arguments: argument (COMMA argument)* |
-    ?argument: VARIABLENAME LPAREN datatype RPAREN
+    ?argument: augumentname LPAREN datatype RPAREN
 
     functioncall1: VARIABLENAME LPAREN [functionargs] RPAREN ENDOST
     functioncall2: VARIABLENAME LPAREN [functionargs] RPAREN 
@@ -853,10 +1157,10 @@ def main():
     EXITWITH: "exitwith"
     IMMUTABLE: "immute"
 
-
-
     DIGIT: "0".."9"
     VARIABLENAME: /[a-zA-Z_][a-zA-Z0-9_]*/
+    functionname: /[a-zA-Z_][a-zA-Z0-9_]*/
+    augumentname: /[a-zA-Z_][a-zA-Z0-9_]*/
     key: expression
     value: expression
     anytext: /(?:[^"\\]|\\.)?/
@@ -865,27 +1169,40 @@ def main():
     %ignore " "
     %ignore /\s+/
 """
+    parser1 = Lark(ggrammar, start='start', parser='lalr')
 
-     # Initialize the parser with the grammar and the transformer
-    parser = Lark(grammar, start='start', parser='lalr')
+    symbol_table = SymbolTable()
+    transformer1 = MyASTTransformer(symbol_table)
     transformer = ASTTransformer()
+    test_cases_folder = 'test_cases'
+    parser = argparse.ArgumentParser(description="Process .cmm files.")
+    parser.add_argument('file', nargs='?', help="The .cmm file to process. If not provided, process all .cmm files in the default directory.")
+    args = parser.parse_args()
+    if args.file:
+        test_case_files = [args.file]
+    else:
+        test_case_files = [f for f in os.listdir(test_cases_folder) if f.endswith('.cmm')]
 
-    # Get list of .cmm files in the folder
-    test_case_files = [f for f in os.listdir(test_cases_folder) if f.endswith('.cmm')]
+    
 
     for test_case_file in test_case_files:
         test_case_file_path = os.path.join(test_cases_folder, test_case_file)
         with open(test_case_file_path, "r") as file:
             test_cases_content = file.read()
-        
-        print(f"Processing file: {test_case_file_path}")
-        try:
-            parse_tree = parser.parse(test_cases_content)
-            ast = transformer.transform(parse_tree)  # Transform parse tree into AST
-            print("AST Output:")
-            print_ast(ast)  # Use the updated print_ast function
-        except Exception as e:
-            print(f"Error parsing file {test_case_file_path}: {e}")
 
+    # test_cases_content = "x(integer) = 9;"
+    parse_tree = parser1.parse(test_cases_content)
+    # print_ast(parse_tree)
+    ast = transformer.transform(parse_tree)
+    tokens_list = collect_tokens(parse_tree)  
+    print_ast(ast)
+    # print(tokens_list)
+
+    # tokens_list = collect_tokens(ast)  
+    # print(tokens_list)
+    transformer1.block(tokens_list)
+    # symbol_table.print_symbol_table()
 if __name__ == "__main__":
     main()
+
+
