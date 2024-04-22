@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebAssembly Example</title>
+</head>
+<body>
+    <h1>WebAssembly Test</h1>
+    <button onclick="loadAndRunWasm()">Run WebAssembly</button>
+    <script>
+        async function loadAndRunWasm() {
+            try {
+                const response = await fetch('output.wasm'); // Replace 'output.wasm' with the path to your WASM file
+                const buffer = await response.arrayBuffer();
+                const module = await WebAssembly.instantiate(buffer);
+
+                // Assuming your module exports a function called 'main'
+                const result = module.instance.exports.main(); // Call exported WASM function
+                console.log('Result from WASM:', result);
+            } catch (err) {
+                console.error('Error loading or running wasm:', err);
+            }
+        }
+    </script>
+</body>
+</html>
