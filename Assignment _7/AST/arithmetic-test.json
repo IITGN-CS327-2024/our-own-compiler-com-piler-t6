@@ -1,0 +1,165 @@
+{
+    "type": "program",
+    "children": [
+        {
+            "type": "statements",
+            "body": [
+                {
+                    "type": "function_decl",
+                    "name": "add",
+                    "args": {
+                        "names": [
+                            {
+                                "name": "a",
+                                "data_type": "integer"
+                            },
+                            {
+                                "name": "b",
+                                "data_type": "integer"
+                            }
+                        ]
+                    },
+                    "return_type": "integer",
+                    "body": {
+                        "type": "block",
+                        "body": [
+                            {
+                                "type": "return_statement",
+                                "value": {
+                                    "type": "arithmetic_expr",
+                                    "operator": "+",
+                                    "left": "a",
+                                    "right": "b"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "function_decl",
+                    "name": "sub",
+                    "args": {
+                        "names": [
+                            {
+                                "name": "a",
+                                "data_type": "integer"
+                            },
+                            {
+                                "name": "b",
+                                "data_type": "integer"
+                            }
+                        ]
+                    },
+                    "return_type": "integer",
+                    "body": {
+                        "type": "block",
+                        "body": [
+                            {
+                                "type": "return_statement",
+                                "value": {
+                                    "type": "arithmetic_expr",
+                                    "operator": "-",
+                                    "left": "a",
+                                    "right": "b"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "function_decl",
+                    "name": "mul",
+                    "args": {
+                        "names": [
+                            {
+                                "name": "a",
+                                "data_type": "integer"
+                            },
+                            {
+                                "name": "b",
+                                "data_type": "integer"
+                            }
+                        ]
+                    },
+                    "return_type": "integer",
+                    "body": {
+                        "type": "block",
+                        "body": [
+                            {
+                                "type": "return_statement",
+                                "value": {
+                                    "type": "arithmetic_expr",
+                                    "operator": "*",
+                                    "left": "a",
+                                    "right": "b"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "function_decl",
+                    "name": "div",
+                    "args": {
+                        "names": [
+                            {
+                                "name": "a",
+                                "data_type": "integer"
+                            },
+                            {
+                                "name": "b",
+                                "data_type": "integer"
+                            }
+                        ]
+                    },
+                    "return_type": "integer",
+                    "body": {
+                        "type": "block",
+                        "body": [
+                            {
+                                "type": "return_statement",
+                                "value": {
+                                    "type": "arithmetic_expr",
+                                    "operator": "/",
+                                    "left": "a",
+                                    "right": "b"
+                                }
+                            }
+                        ]
+                    }
+                },
+                {
+                    "type": "function_decl",
+                    "name": "mod",
+                    "args": {
+                        "names": [
+                            {
+                                "name": "a",
+                                "data_type": "integer"
+                            },
+                            {
+                                "name": "b",
+                                "data_type": "integer"
+                            }
+                        ]
+                    },
+                    "return_type": "integer",
+                    "body": {
+                        "type": "block",
+                        "body": [
+                            {
+                                "type": "return_statement",
+                                "value": {
+                                    "type": "arithmetic_expr",
+                                    "operator": "%",
+                                    "left": "a",
+                                    "right": "b"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

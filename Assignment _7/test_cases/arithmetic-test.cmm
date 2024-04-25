@@ -1,0 +1,19 @@
+fn add(a(integer), b(integer)) -> integer{
+    exitwith a+b;
+}
+
+fn sub(a(integer), b(integer)) -> integer{
+    exitwith a-b;
+}
+
+fn mul(a(integer), b(integer)) -> integer{
+    exitwith a*b;
+}
+
+fn div(a(integer), b(integer)) -> integer{
+    exitwith a/b;
+}
+
+fn mod(a(integer), b(integer)) -> integer{
+    exitwith a%b;
+}
